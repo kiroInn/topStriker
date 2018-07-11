@@ -1,0 +1,26 @@
+{
+  "name": "topstriker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiroInn/TopStriker.git"
+  },
+  "keywords": [
+    "football",
+    "game"
+  ],
+  "author": "Kiro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kiroInn/TopStriker/issues"
+  },
+  "homepage": "https://github.com/kiroInn/TopStriker#readme",
+  "dependencies": {
+    "ws": "^5.2.1"
+  }
+}
