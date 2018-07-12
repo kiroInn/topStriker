@@ -1,4 +1,4 @@
-import '../css/index.css'
+import '../css/index.less'
 import {App} from './app'
 
 new App().run()
