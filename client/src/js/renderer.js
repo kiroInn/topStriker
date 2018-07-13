@@ -1,3 +1,4 @@
+import backgroundImg from '../img/common/background.png'
 export class Renderer {
   constructor () {
     this.canvas = document.querySelector('#game')

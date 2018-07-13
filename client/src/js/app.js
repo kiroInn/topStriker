@@ -31,7 +31,6 @@ export class App {
       this.userNameInput.focus()
       return false
     }
-    console.log({name: userName, uid: Util.guid()})
     DOM.hide(this.userContainer)
     DOM.show(this.roomContainer)
   }
@@ -42,7 +41,6 @@ export class App {
       this.roomNumberInput.focus()
       return false
     }
-    console.log({number})
     DOM.hide(this.roomContainer)
     this.game.setUp({id: Util.guid(), name: 'Kiro'})
     this.game.run()

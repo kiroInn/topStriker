@@ -6,7 +6,7 @@ export class Striker extends Entity {
     super(id)
     this.name = name
     this.nameOffsetY = -5
-    this.speed = 256
+    this.speed = 128
     this.img = new Image()
     this.img.src = heroImg
   }
