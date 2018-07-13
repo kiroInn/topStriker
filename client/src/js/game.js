@@ -1,6 +1,6 @@
 import {Striker} from './striker'
 import {Renderer} from './renderer'
-import {Util} from './util'
+import {requestAnimationFrame} from './util'
 
 export class Game {
   constructor () {
@@ -26,7 +26,7 @@ export class Game {
     this.update(duration / 1000)
     this.renderer.render(this.striker)
     this.then = now
-    Util.gRequestAnimationFrame()(this.run.bind(this))
+    requestAnimationFrame(() => this.run())
   }
 
   update (duration) {
@@ -43,6 +43,5 @@ export class Game {
       this.striker.x += this.striker.speed * duration
     }
   }
-
 
 }
