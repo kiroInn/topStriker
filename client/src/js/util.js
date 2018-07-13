@@ -7,4 +7,8 @@ export class Util {
     }
     return `${s4() + s4() + s4() + s4()}`
   }
+
+  static gRequestAnimationFrame() {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.mozRequestAnimationFrame;
+  }
 }

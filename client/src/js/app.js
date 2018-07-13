@@ -15,7 +15,7 @@ export class App {
   }
 
   init () {
-    // DOM.hide(this.roomContainer)
+    DOM.hide(this.roomContainer)
     document.addEventListener('DOMContentLoaded', () => {
       this.userNameBtn.addEventListener('click', () => this.selectUser())
       this.roomNumberBtn.addEventListener('click', () => this.selectRoom())

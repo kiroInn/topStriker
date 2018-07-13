@@ -1,28 +1,48 @@
 import {Striker} from './striker'
+import {Renderer} from './renderer'
+import {Util} from './util'
 
-export class Game{
-  constructor (){
-    this.canvas = document.querySelector('#game')
-    this.context = this.canvas.getContext('2d')
-    this.canvas.width = document.body.clientWidth
-    this.canvas.height = document.body.clientHeight
+export class Game {
+  constructor () {
+    this.keysDown = {}
+    this.renderer = new Renderer()
+    this.then = new Date()
+    window.addEventListener('keydown', e => {
+      this.keysDown[e.keyCode] = true
+    }, false)
+
+    window.addEventListener('keyup', (e) => {
+      delete this.keysDown[e.keyCode]
+    }, false)
   }
 
   setUp ({id, name}) {
     this.striker = new Striker({id, name})
   }
 
-  run (){
-    this.interval = setInterval(() => this.update(), 10);
+  run () {
+    let now = Date.now();
+    let duration = now - this.then
+    this.update(duration / 1000)
+    this.renderer.render(this.striker)
+    this.then = now
+    Util.gRequestAnimationFrame()(this.run.bind(this))
   }
 
-  update(){
-    this.clear()
-    this.context.fillStyle = 'deeppink'
-    this.context.fillRect(this.striker.x,this.striker.y, 30, 30)
+  update (duration) {
+    if (38 in this.keysDown) {
+      this.striker.y -= this.striker.speed * duration
+    }
+    if (40 in this.keysDown) {
+      this.striker.y += this.striker.speed * duration
+    }
+    if (37 in this.keysDown) {
+      this.striker.x -= this.striker.speed * duration
+    }
+    if (39 in this.keysDown) {
+      this.striker.x += this.striker.speed * duration
+    }
   }
 
-  clear() {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  }
+
 }
