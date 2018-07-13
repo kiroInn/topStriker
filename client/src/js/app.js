@@ -16,10 +16,13 @@ export class App {
 
   init () {
     DOM.hide(this.roomContainer)
+    DOM.hide(this.userContainer)
     document.addEventListener('DOMContentLoaded', () => {
       this.userNameBtn.addEventListener('click', () => this.selectUser())
       this.roomNumberBtn.addEventListener('click', () => this.selectRoom())
     })
+    this.game.setUp({id: Util.guid(), name: 'Target'})
+    this.game.run()
   }
 
   selectUser () {
