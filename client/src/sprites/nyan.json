@@ -1,0 +1,43 @@
+{
+  "id": "nyan",
+  "width": 147,
+  "height": 72,
+  "animations": [
+    {
+      "left": 0,
+      "top": 0,
+      "width": 147,
+      "height": 72
+    },
+    {
+      "left": 147,
+      "top": 0,
+      "width": 147,
+      "height": 72
+    },
+    {
+      "left": 294,
+      "top": 0,
+      "width": 147,
+      "height": 72
+    },
+    {
+      "left": 441,
+      "top": 0,
+      "width": 147,
+      "height": 72
+    },
+    {
+      "left": 588,
+      "top": 0,
+      "width": 147,
+      "height": 72
+    },
+    {
+      "left": 735,
+      "top": 0,
+      "width": 147,
+      "height": 72
+    }
+  ]
+}

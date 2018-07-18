@@ -1,21 +1,34 @@
 import {Entity} from './entity'
-import heroImg from '../img/common/hero.png'
+
+const ANIMATION_INTERVAL = 100
+const ANIMATION_INTERVAL_EX = 20
 
 export class Striker extends Entity {
   constructor ({id, name}) {
     super(id)
     this.name = name
-    this.nameOffsetY = -5
+    this.nameOffsetY = 0
+    this.nameOffsetX = 35
     this.speed = 128
-    this.img = new Image()
-    this.img.src = heroImg
+    this.cellIndex = 0
+    this.isMoveing = false
+    this.lastTime = new Date()
   }
 
-  setSpriteName (name) {
-    this.spriteName = name
+  advance () {
+    this.cellIndex === this.sprite.cells.length - 1 ? this.cellIndex = 0 : this.cellIndex++
   }
 
-  getSpriteName () {
-    return this.spriteName
+  animation () {
+    let nowTime = new Date()
+    let diffTime = nowTime.getTime() - this.lastTime.getTime()
+    if (this.isMoveing && diffTime >= ANIMATION_INTERVAL_EX) {
+      this.advance()
+      this.lastTime = nowTime
+    } else if (diffTime >= ANIMATION_INTERVAL) {
+      this.advance()
+      this.lastTime = nowTime
+    }
   }
+
 }

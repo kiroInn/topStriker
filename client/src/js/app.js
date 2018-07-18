@@ -21,7 +21,10 @@ export class App {
       this.userNameBtn.addEventListener('click', () => this.selectUser())
       this.roomNumberBtn.addEventListener('click', () => this.selectRoom())
     })
-    this.game.setUp({id: Util.guid(), name: 'Target'})
+    window.matchMedia("(orientation:portrait)").addListener(function () {
+      location.reload()
+    });
+    this.game.setUp({id: Util.guid(), name: 'KIRO'})
     this.game.run()
   }
 
