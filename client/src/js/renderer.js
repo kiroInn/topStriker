@@ -4,7 +4,6 @@ export class Renderer {
     this.context = this.canvas.getContext('2d')
     this.canvas.width = document.body.clientWidth
     this.canvas.height = document.body.clientHeight
-    console.log(this.canvas.height, this.canvas.width)
     this.lastTime = 0
 
   }
@@ -66,7 +65,6 @@ export class Renderer {
 
   drawLine () {
     let ctx = this.context
-    console.log(this.canvas.clientHeight, this.canvas.clientWidth)
     ctx.lineWidth = 10
     ctx.beginPath()
     ctx.moveTo(0, 0)
