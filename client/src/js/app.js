@@ -26,10 +26,14 @@ export class App {
     window.matchMedia("(orientation:portrait)").addListener(function () {
       location.reload()
     })
-    new Connect()
+
     this.loadImages().then(() => {
-      this.game.setUp({id: Util.guid(), name: 'KIRO'})
-      this.game.run()
+      let striker = {id: Util.guid(), name: 'KIRO'}
+      new Connect().connect(striker, (data) => {
+        console.log('data received', data)
+        this.game.setUp(data)
+        this.game.run()
+      })
     })
   }
 
