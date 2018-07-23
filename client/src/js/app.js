@@ -1,6 +1,7 @@
 import {Util} from './util'
 import {DOM} from './dom'
 import {Game} from './game'
+import {IMAGES} from './const'
 
 export class App {
   constructor () {
@@ -23,9 +24,11 @@ export class App {
     })
     window.matchMedia("(orientation:portrait)").addListener(function () {
       location.reload()
-    });
-    this.game.setUp({id: Util.guid(), name: 'KIRO'})
-    this.game.run()
+    })
+    this.loadImages().then(() => {
+      this.game.setUp({id: Util.guid(), name: 'KIRO'})
+      this.game.run()
+    })
   }
 
   selectUser () {
@@ -48,6 +51,22 @@ export class App {
     this.game.setUp({id: Util.guid(), name: 'Kiro'})
     this.game.run()
   }
+
+  loadImages () {
+    return new Promise(resolve => {
+      IMAGES.forEach((key, i) => {
+        import(`../img/common/${key}.png`).then(value => {
+          let img = new Image()
+          img.src = value.default
+          img.onload = () => {
+            this.game.setImage(key, img)
+            if (i === IMAGES.length - 1) resolve()
+          }
+        })
+      })
+    })
+  }
+
 }
 
 new App()

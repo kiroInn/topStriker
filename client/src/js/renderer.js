@@ -1,22 +1,34 @@
+import {FIELD_NUMBER, IMAGER} from './const'
+
 export class Renderer {
-  constructor () {
+  constructor (game) {
+    this.game = game
     this.canvas = document.querySelector('#game')
     this.context = this.canvas.getContext('2d')
     this.canvas.width = document.body.clientWidth
     this.canvas.height = document.body.clientHeight
+    console.log('w, h', this.canvas.width / FIELD_NUMBER.WIDTH, this.canvas.height / FIELD_NUMBER.HEIGHT)
     this.lastTime = 0
-
   }
 
   render (striker) {
     this.clear()
     this.drawBackground()
+    // this.drawBorder()
     this.drawStriker(striker)
     this.drawFps()
   }
 
-  drawBackground () {
+  drawBorder(){
+    let img = this.game.imager[IMAGER.BORDER]
+    this.drawPattern(img, this.canvas.width, this.canvas.height)
+  }
 
+  drawBackground () {
+    let bgW = this.canvas.width / FIELD_NUMBER.WIDTH
+    let bgH = this.canvas.height / FIELD_NUMBER.HEIGHT
+    let img = this.game.imager[IMAGER.BACKGROUND]
+    this.drawPattern(img, bgW, bgH)
   }
 
   drawStriker (striker) {
@@ -24,6 +36,23 @@ export class Renderer {
     let cell = striker.sprite.cells[striker.cellIndex]
     this.drawImage(striker.sprite.image, cell.left, cell.top, cell.width, cell.height, striker.x, striker.y, cell.width / 3, cell.height / 3)
     this.drawText(striker.name, (striker.x + striker.nameOffsetX), (striker.y + striker.nameOffsetY), true, "#fcda5c", "#fcda5c")
+  }
+
+  drawPattern (img, w, h) {
+    let tempCanvas = document.createElement("canvas"),
+      tCtx = tempCanvas.getContext("2d")
+
+    tempCanvas.width = w
+    tempCanvas.height = h
+    tCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, w, h)
+
+    // use getContext to use the canvas for drawing
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.context.fillStyle = this.context.createPattern(tempCanvas, 'repeat')
+
+    this.context.beginPath()
+    this.context.rect(0, 0, this.canvas.width, this.canvas.height)
+    this.context.fill()
   }
 
   clipStriker (striker) {
@@ -80,7 +109,7 @@ export class Renderer {
     let now = (+new Date())
     let fps = 1000 / (now - this.lastTime)
     this.lastTime = now
-    this.context.fillStyle = 'cornflowerblue'
+    this.context.fillStyle = 'pink'
     this.context.textAlign = 'end'
     this.context.fillText(fps.toFixed() + ' fps', this.canvas.clientWidth, 10)
   }

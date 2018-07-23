@@ -6,6 +6,7 @@ import {Sprite} from './sprite'
 export class Game {
   constructor () {
     this.keysDown = {}
+    this.imager = {}
     this.renderer = new Renderer(this)
     this.then = new Date()
     window.addEventListener('keydown', e => {
@@ -53,4 +54,7 @@ export class Game {
     this.striker.animation()
   }
 
+  setImage (k, v) {
+    this.imager[k] = v
+  }
 }
