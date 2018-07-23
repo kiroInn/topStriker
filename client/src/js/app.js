@@ -2,6 +2,7 @@ import {Util} from './util'
 import {DOM} from './dom'
 import {Game} from './game'
 import {IMAGES} from './const'
+import {Connect} from './connect'
 
 export class App {
   constructor () {
@@ -25,6 +26,7 @@ export class App {
     window.matchMedia("(orientation:portrait)").addListener(function () {
       location.reload()
     })
+    new Connect()
     this.loadImages().then(() => {
       this.game.setUp({id: Util.guid(), name: 'KIRO'})
       this.game.run()

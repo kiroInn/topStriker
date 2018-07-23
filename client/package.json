@@ -23,6 +23,7 @@
   "homepage": "https://github.com/kiroInn/TopStriker#readme",
   "dependencies": {
     "babel-loader": "^8.0.0-beta.4",
+    "socket.io": "^2.1.1",
     "ws": "^5.2.1"
   },
   "devDependencies": {
