@@ -10,10 +10,10 @@ io.on('connection', function (client) {
   console.log('client connection')
   client.on(TYPES.EVENTS.INIT, (data) => {
     console.log(`on event ${TYPES.EVENTS.INIT}`, data)
-    let {uuid, name} = data
+    let {id, name} = data
     let number = gameInfo.length + 1
     if (number < INFO.LIMIT_NUMBER) {
-      let striker = {name, uuid, x: 150, y: number * 2.5}
+      let striker = {name, id, x: 150, y: number * 2.5}
       gameInfo.push(striker)
       client.emit(TYPES.EVENTS.ON_INIT, striker)
     }
@@ -21,9 +21,9 @@ io.on('connection', function (client) {
 
   client.on(TYPES.EVENTS.MOVE, function (data) {
     console.log(`on event ${TYPES.EVENTS.MOVE}`, data)
-    const {uuid, x, y} = data
+    const {id, x, y} = data
     _.map(gameInfo, item => {
-      if (_.get(item, 'uuid') === uuid) return {...item, x, y}
+      if (_.get(item, 'id') === id) return {...item, x, y}
       return item
     })
     client.emit(TYPES.EVENTS.ON_MOVE, data)

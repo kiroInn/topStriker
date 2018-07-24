@@ -11,7 +11,7 @@ export class Striker extends Entity {
     this.nameOffsetX = 35
     this.speed = 128
     this.cellIndex = 0
-    this.isMoveing = false
+    this.isMoving = false
     this.lastTime = new Date()
   }
 
@@ -22,7 +22,7 @@ export class Striker extends Entity {
   animation () {
     let nowTime = new Date()
     let diffTime = nowTime.getTime() - this.lastTime.getTime()
-    if (this.isMoveing && diffTime >= ANIMATION_INTERVAL_EX) {
+    if (this.isMoving && diffTime >= ANIMATION_INTERVAL_EX) {
       this.advance()
       this.lastTime = nowTime
     } else if (diffTime >= ANIMATION_INTERVAL) {

@@ -11,15 +11,16 @@ export class Renderer {
     this.lastTime = 0
   }
 
-  render (striker) {
+  render (strikers) {
     this.clear()
     this.drawBackground()
-    // this.drawBorder()
-    this.drawStriker(striker)
+    _.each(strikers, striker => {
+      this.drawStriker(striker)
+    })
     this.drawFps()
   }
 
-  drawBorder(){
+  drawBorder () {
     let img = this.game.imager[IMAGER.BORDER]
     this.drawPattern(img, this.canvas.width, this.canvas.height)
   }
@@ -35,12 +36,12 @@ export class Renderer {
     if (striker.sprite.cells.length <= 0) return false
     let cell = striker.sprite.cells[striker.cellIndex]
     this.drawImage(striker.sprite.image, cell.left, cell.top, cell.width, cell.height, striker.x, striker.y, cell.width / 3, cell.height / 3)
-    this.drawText(striker.name, (striker.x + striker.nameOffsetX), (striker.y + striker.nameOffsetY), true, "#fcda5c", "#fcda5c")
+    this.drawText(striker.name, (striker.x + striker.nameOffsetX), (striker.y + striker.nameOffsetY), true, '#fcda5c', '#fcda5c')
   }
 
   drawPattern (img, w, h) {
-    let tempCanvas = document.createElement("canvas"),
-      tCtx = tempCanvas.getContext("2d")
+    let tempCanvas = document.createElement('canvas'),
+      tCtx = tempCanvas.getContext('2d')
 
     tempCanvas.width = w
     tempCanvas.height = h
@@ -73,12 +74,12 @@ export class Renderer {
     if (text && x && y) {
       ctx.save()
       if (centered) {
-        ctx.textAlign = "center"
+        ctx.textAlign = 'center'
       }
-      ctx.strokeStyle = strokeColor || "#373737"
+      ctx.strokeStyle = strokeColor || '#373737'
       ctx.lineWidth = 1
       ctx.strokeText(text, x, y)
-      ctx.fillStyle = color || "white"
+      ctx.fillStyle = color || 'white'
       ctx.fillText(text, x, y)
       ctx.restore()
     }

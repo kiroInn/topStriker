@@ -4,7 +4,7 @@ import {Renderer} from './renderer'
 import {requestAnimationFrame} from './util'
 import {Sprite} from './sprite'
 import {Connect} from './connect'
-import {TYPES} from './const'
+import TYPES from '../../../shared/gametypes';
 
 export class Game {
   constructor () {
@@ -17,16 +17,16 @@ export class Game {
     this.then = new Date()
     window.addEventListener('keydown', e => {
       this.keysDown[e.keyCode] = true
-      this.striker.isMoveing = true
+      if (_.has(this.striker, 'isMoving')) this.striker.isMoving = true
     }, false)
 
     window.addEventListener('keyup', (e) => {
       delete this.keysDown[e.keyCode]
-      this.striker.isMoveing = false
+      if (_.has(this.striker, 'isMoving')) this.striker.isMoving = false
     }, false)
   }
 
-  setStriker ({id, name}) {
+  buildStriker ({id, name}) {
     let striker = new Striker({id, name})
     striker.setSprite(new Sprite('nyan'))
     return striker
@@ -38,17 +38,28 @@ export class Game {
     this.receive(this.connecter.socket)
   }
 
-  receive (listener) {
-    listener.on(TYPES.EVENTS.ON_INIT, data => {
+  receive (client) {
+    // striker init finish
+    client.on(TYPES.EVENTS.ON_INIT, values => {
+      let strikers = []
       _.each(values, value => {
-        let striker = this.setStriker(value)
-        if (_.get(value, 'uuid') === striker.uuid) this.striker = striker
-        this.strikers.push(striker)
+        let striker = this.buildStriker(value)
+        if (_.get(value, 'id') === striker.id) this.striker = striker
+        strikers.push(striker)
       })
+      this.strikers = strikers
       this.run()
     })
-    listener.on(TYPES.EVENTS.ON_MOVE, data => {
-      console.log(TYPES.EVENTS.ON_MOVE)
+
+    // striker has moved
+    client.on(TYPES.EVENTS.ON_MOVE, data => {
+      console.log('on moved', data)
+      let {id, x, y} = data
+      _.map(this.strikers, item => {
+        if (item.id === id) return {...item, x, y}
+        return item
+      })
+
     })
   }
 
@@ -56,7 +67,7 @@ export class Game {
     let now = Date.now();
     let duration = now - this.then
     this.update(duration / 1000)
-    this.renderer.render(this.striker)
+    this.renderer.render(this.strikers)
     this.then = now
     requestAnimationFrame(() => this.run())
   }
@@ -78,6 +89,8 @@ export class Game {
       this.striker.x += this.striker.speed * duration
       if (this.striker.x >= this.renderer.canvas.width) this.striker.x = this.renderer.canvas.width
     }
+    console.log(this.striker.isMoving, 'isMoving')
+    if (this.striker.isMoving) this.connecter.sendMove(this.striker)
     this.striker.animation()
   }
 
