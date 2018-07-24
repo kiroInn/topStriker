@@ -1,8 +1,9 @@
 const TYPES = {
   EVENTS: {
     INIT: 'init',
-    INIT_FINISH: 'init_finish',
-    MOVE: 'move'
+    ON_INIT: 'onInit',
+    MOVE: 'move',
+    ON_MOVE: 'onMove'
   }
 }
 

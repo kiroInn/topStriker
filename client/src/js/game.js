@@ -1,13 +1,19 @@
+import _ from 'lodash'
 import {Striker} from './striker'
 import {Renderer} from './renderer'
 import {requestAnimationFrame} from './util'
 import {Sprite} from './sprite'
+import {Connect} from './connect'
+import {TYPES} from './const'
 
 export class Game {
   constructor () {
     this.keysDown = {}
     this.imager = {}
     this.renderer = new Renderer(this)
+    this.striker = null
+    this.strikers = []
+    this.connecter = null
     this.then = new Date()
     window.addEventListener('keydown', e => {
       this.keysDown[e.keyCode] = true
@@ -20,9 +26,30 @@ export class Game {
     }, false)
   }
 
-  setUp ({id, name}) {
-    this.striker = new Striker({id, name})
-    this.striker.setSprite(new Sprite('nyan'))
+  setStriker ({id, name}) {
+    let striker = new Striker({id, name})
+    striker.setSprite(new Sprite('nyan'))
+    return striker
+  }
+
+  connect (striker) {
+    this.connecter = new Connect()
+    this.connecter.connect(striker)
+    this.receive(this.connecter.socket)
+  }
+
+  receive (listener) {
+    listener.on(TYPES.EVENTS.ON_INIT, data => {
+      _.each(values, value => {
+        let striker = this.setStriker(value)
+        if (_.get(value, 'uuid') === striker.uuid) this.striker = striker
+        this.strikers.push(striker)
+      })
+      this.run()
+    })
+    listener.on(TYPES.EVENTS.ON_MOVE, data => {
+      console.log(TYPES.EVENTS.ON_MOVE)
+    })
   }
 
   run () {

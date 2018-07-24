@@ -13,6 +13,7 @@
   "author": "Kiro",
   "license": "ISC",
   "dependencies": {
+    "lodash": "^4.17.10",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {}

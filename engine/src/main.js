@@ -2,24 +2,31 @@ let server = require('http').createServer()
 let io = require('socket.io')(server)
 let TYPES = require('../../shared/gametypes')
 let INFO = require('./const')
+let _ = require('lodash')
 
 let gameInfo = []
 
 io.on('connection', function (client) {
   console.log('client connection')
-
   client.on(TYPES.EVENTS.INIT, (data) => {
     console.log(`on event ${TYPES.EVENTS.INIT}`, data)
     let {uuid, name} = data
     let number = gameInfo.length + 1
     if (number < INFO.LIMIT_NUMBER) {
       let striker = {name, uuid, x: 150, y: number * 2.5}
-      client.emit(TYPES.EVENTS.INIT_FINISH, striker)
+      gameInfo.push(striker)
+      client.emit(TYPES.EVENTS.ON_INIT, striker)
     }
   })
 
   client.on(TYPES.EVENTS.MOVE, function (data) {
     console.log(`on event ${TYPES.EVENTS.MOVE}`, data)
+    const {uuid, x, y} = data
+    _.map(gameInfo, item => {
+      if (_.get(item, 'uuid') === uuid) return {...item, x, y}
+      return item
+    })
+    client.emit(TYPES.EVENTS.ON_MOVE, data)
   })
 
   client.on('disconnect', function () {

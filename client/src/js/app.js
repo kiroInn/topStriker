@@ -2,7 +2,6 @@ import {Util} from './util'
 import {DOM} from './dom'
 import {Game} from './game'
 import {IMAGES} from './const'
-import {Connect} from './connect'
 
 export class App {
   constructor () {
@@ -29,11 +28,7 @@ export class App {
 
     this.loadImages().then(() => {
       let striker = {id: Util.guid(), name: 'KIRO'}
-      new Connect().connect(striker, (data) => {
-        console.log('data received', data)
-        this.game.setUp(data)
-        this.game.run()
-      })
+      this.game.connect(striker)
     })
   }
 
