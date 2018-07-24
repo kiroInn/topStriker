@@ -22,7 +22,7 @@ export class App {
       this.userNameBtn.addEventListener('click', () => this.selectUser())
       this.roomNumberBtn.addEventListener('click', () => this.selectRoom())
     })
-    window.matchMedia("(orientation:portrait)").addListener(function () {
+    window.matchMedia('(orientation:portrait)').addListener(function () {
       location.reload()
     })
 
