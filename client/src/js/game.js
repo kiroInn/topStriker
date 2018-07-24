@@ -36,11 +36,12 @@ export class Game {
     this.connecter = new Connect()
     this.connecter.connect(striker)
     this.receive(this.connecter.socket)
+    this.run()
   }
 
   receive (client) {
     // striker init finish
-    client.on(TYPES.EVENTS.ON_INIT, values => {
+    this.connecter.onMove(values => {
       let strikers = []
       _.each(values, value => {
         let striker = this.buildStriker(value)
@@ -48,7 +49,6 @@ export class Game {
         strikers.push(striker)
       })
       this.strikers = strikers
-      this.run()
     })
 
     // striker has moved
@@ -73,6 +73,7 @@ export class Game {
   }
 
   update (duration) {
+    if (_.isNull(this.striker)) return
     if (38 in this.keysDown) {
       this.striker.y -= this.striker.speed * duration
       if (this.striker.y <= 0) this.striker.y = 0
@@ -90,7 +91,7 @@ export class Game {
       if (this.striker.x >= this.renderer.canvas.width) this.striker.x = this.renderer.canvas.width
     }
     console.log(this.striker.isMoving, 'isMoving')
-    if (this.striker.isMoving) this.connecter.sendMove(this.striker)
+    if (this.striker.isMoving) this.connecter.move(this.striker)
     this.striker.animation()
   }
 

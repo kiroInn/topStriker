@@ -14,7 +14,13 @@ export class Connect {
     })
   }
 
-  sendMove (striker) {
+  onMove (callback) {
+    this.socket.on(TYPES.EVENTS.ON_MOVE, data => {
+      callback(data)
+    })
+  }
+
+  move (striker) {
     this.socket.emit(TYPES.EVENTS.MOVE, striker)
   }
 
