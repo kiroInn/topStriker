@@ -60,6 +60,7 @@ export class Game {
       let {id, x, y} = data
       _.each(this.strikers, item => {
         if (item.id === id) {
+          item.isMoving = true
           item.x = x
           item.y = y
         }
