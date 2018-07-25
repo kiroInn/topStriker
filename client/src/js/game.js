@@ -30,8 +30,8 @@ export class Game {
     this.currentStriker = {id, name}
   }
 
-  buildStriker ({id, name}) {
-    let striker = new Striker({id, name})
+  buildStriker ({id, name, x, y}) {
+    let striker = new Striker({id, name, x, y})
     striker.setSprite(new Sprite('nyan'))
     return striker
   }

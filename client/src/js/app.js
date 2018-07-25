@@ -17,17 +17,12 @@ export class App {
 
   init () {
     DOM.hide(this.roomContainer)
-    DOM.hide(this.userContainer)
     document.addEventListener('DOMContentLoaded', () => {
       this.userNameBtn.addEventListener('click', () => this.selectUser())
       this.roomNumberBtn.addEventListener('click', () => this.selectRoom())
     })
     window.matchMedia('(orientation:portrait)').addListener(function () {
       location.reload()
-    })
-    this.loadImages().then(() => {
-      this.game.setCurrentStriker({id: Util.guid(), name: 'KIRO'})
-      this.game.connect()
     })
   }
 
@@ -38,7 +33,10 @@ export class App {
       return false
     }
     DOM.hide(this.userContainer)
-    DOM.show(this.roomContainer)
+    this.loadAssets().then(() => {
+      this.game.setCurrentStriker({id: Util.guid(), name: userName})
+      this.game.connect()
+    })
   }
 
   selectRoom () {
@@ -48,11 +46,9 @@ export class App {
       return false
     }
     DOM.hide(this.roomContainer)
-    this.game.setUp({id: Util.guid(), name: 'Kiro'})
-    this.game.run()
   }
 
-  loadImages () {
+  loadAssets () {
     return new Promise(resolve => {
       IMAGES.forEach((key, i) => {
         import(`../img/common/${key}.png`).then(value => {

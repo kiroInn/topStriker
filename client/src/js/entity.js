@@ -1,8 +1,8 @@
 export class Entity {
-  constructor (id) {
+  constructor (id, x = 0, y = 0) {
     this.id = id
-    this.x = 0
-    this.y = 0
+    this.x = x
+    this.y = y
 
     // renderer
     this.sprite = null
@@ -15,7 +15,7 @@ export class Entity {
   }
 
   setSprite (sprite) {
-    if(!sprite) {
+    if (!sprite) {
       console.error('sprite is null')
       throw "ERROR"
     }

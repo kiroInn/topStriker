@@ -4,8 +4,8 @@ const ANIMATION_INTERVAL = 100
 const ANIMATION_INTERVAL_EX = 20
 
 export class Striker extends Entity {
-  constructor ({id, name}) {
-    super(id)
+  constructor ({id, name, x, y}) {
+    super(id, x, y)
     this.name = name
     this.nameOffsetY = 0
     this.nameOffsetX = 35

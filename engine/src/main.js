@@ -13,8 +13,9 @@ io.on('connection', function (client) {
     let {id, name} = data
     let number = strikers.length + 1
     if (number < INFO.LIMIT_NUMBER) {
-      let striker = {name, id, x: 150, y: number * 2.5}
+      let striker = {name, id, x: 150, y: number * 70}
       strikers.push(striker)
+      console.log('strikers', strikers)
       io.emit(TYPES.EVENTS.INITIALED, strikers)
     } else {
       console.log('strikers is fully')
@@ -24,9 +25,11 @@ io.on('connection', function (client) {
   client.on(TYPES.EVENTS.MOVE, function (data) {
     console.log(`on event ${TYPES.EVENTS.MOVE}`, data)
     const {id, x, y} = data
-    _.map(strikers, item => {
-      if (_.get(item, 'id') === id) return {...item, x, y}
-      return item
+    _.each(strikers, item => {
+      if (_.get(item, 'id') === id) {
+        item.x = x
+        item.y = y
+      }
     })
     io.emit(TYPES.EVENTS.MOVED, data)
   })
