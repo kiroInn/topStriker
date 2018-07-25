@@ -25,10 +25,9 @@ export class App {
     window.matchMedia('(orientation:portrait)').addListener(function () {
       location.reload()
     })
-
     this.loadImages().then(() => {
-      let striker = {id: Util.guid(), name: 'KIRO'}
-      this.game.connect(striker)
+      this.game.setCurrentStriker({id: Util.guid(), name: 'KIRO'})
+      this.game.connect()
     })
   }
 

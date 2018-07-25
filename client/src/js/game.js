@@ -4,7 +4,6 @@ import {Renderer} from './renderer'
 import {requestAnimationFrame} from './util'
 import {Sprite} from './sprite'
 import {Connect} from './connect'
-import TYPES from '../../../shared/gametypes';
 
 export class Game {
   constructor () {
@@ -15,6 +14,7 @@ export class Game {
     this.strikers = []
     this.connecter = null
     this.then = new Date()
+    this.connecter = new Connect()
     window.addEventListener('keydown', e => {
       this.keysDown[e.keyCode] = true
       if (_.has(this.striker, 'isMoving')) this.striker.isMoving = true
@@ -26,40 +26,44 @@ export class Game {
     }, false)
   }
 
+  setCurrentStriker ({id, name}) {
+    this.currentStriker = {id, name}
+  }
+
   buildStriker ({id, name}) {
     let striker = new Striker({id, name})
     striker.setSprite(new Sprite('nyan'))
     return striker
   }
 
-  connect (striker) {
-    this.connecter = new Connect()
-    this.connecter.connect(striker)
-    this.receive(this.connecter.socket)
+  connect () {
+    this.connecter.connect()
+    this.connecter.onConnect(() => {
+      this.connecter.init(this.currentStriker)
+      this.receiveData()
+    })
     this.run()
   }
 
-  receive (client) {
-    // striker init finish
-    this.connecter.onMove(values => {
+  receiveData () {
+    this.connecter.onInit(values => {
       let strikers = []
       _.each(values, value => {
         let striker = this.buildStriker(value)
-        if (_.get(value, 'id') === striker.id) this.striker = striker
+        if (_.get(value, 'id') === this.currentStriker.id) this.striker = striker
         strikers.push(striker)
       })
       this.strikers = strikers
     })
 
-    // striker has moved
-    client.on(TYPES.EVENTS.ON_MOVE, data => {
-      console.log('on moved', data)
+    this.connecter.onMove(data => {
       let {id, x, y} = data
-      _.map(this.strikers, item => {
-        if (item.id === id) return {...item, x, y}
-        return item
+      _.each(this.strikers, item => {
+        if (item.id === id) {
+          item.x = x
+          item.y = y
+        }
       })
-
     })
   }
 
@@ -77,22 +81,23 @@ export class Game {
     if (38 in this.keysDown) {
       this.striker.y -= this.striker.speed * duration
       if (this.striker.y <= 0) this.striker.y = 0
+      this.connecter.move(this.striker)
     }
     if (40 in this.keysDown) {
       this.striker.y += this.striker.speed * duration
       if (this.striker.y >= this.renderer.canvas.height) this.striker.y = this.renderer.canvas.height
+      this.connecter.move(this.striker)
     }
     if (37 in this.keysDown) {
       this.striker.x -= this.striker.speed * duration
       if (this.striker.x <= 0) this.striker.x = 0
+      this.connecter.move(this.striker)
     }
     if (39 in this.keysDown) {
       this.striker.x += this.striker.speed * duration
       if (this.striker.x >= this.renderer.canvas.width) this.striker.x = this.renderer.canvas.width
+      this.connecter.move(this.striker)
     }
-    console.log(this.striker.isMoving, 'isMoving')
-    if (this.striker.isMoving) this.connecter.move(this.striker)
-    this.striker.animation()
   }
 
   setImage (k, v) {

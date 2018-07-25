@@ -13,8 +13,9 @@ export class Renderer {
 
   render (strikers) {
     this.clear()
-    this.drawBackground()
+    // TODO this.drawBackground()
     _.each(strikers, striker => {
+      if (_.get(striker, 'sprite.cells').length && _.isFunction(striker, 'animation')) striker.animation()
       this.drawStriker(striker)
     })
     this.drawFps()
@@ -33,7 +34,7 @@ export class Renderer {
   }
 
   drawStriker (striker) {
-    if (striker.sprite.cells.length <= 0) return false
+    if (!_.get(striker, 'sprite.cells').length) return false
     let cell = striker.sprite.cells[striker.cellIndex]
     this.drawImage(striker.sprite.image, cell.left, cell.top, cell.width, cell.height, striker.x, striker.y, cell.width / 3, cell.height / 3)
     this.drawText(striker.name, (striker.x + striker.nameOffsetX), (striker.y + striker.nameOffsetY), true, '#fcda5c', '#fcda5c')

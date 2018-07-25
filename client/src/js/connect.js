@@ -6,22 +6,35 @@ export class Connect {
     this.socket = null
   }
 
-  connect (striker) {
+  connect () {
     this.socket = io('ws://localhost:3000')
-    this.socket.on('connect', () => {
-      console.log('connected ...')
-      this.socket.emit(TYPES.EVENTS.INIT, {...striker})
+  }
+
+  onConnect (callback) {
+    this.socket.on(TYPES.EVENTS.CONNECTED, () => {
+      callback()
     })
   }
 
-  onMove (callback) {
-    this.socket.on(TYPES.EVENTS.ON_MOVE, data => {
+  init (striker) {
+    const {id, name} = striker
+    this.socket.emit(TYPES.EVENTS.INITIAL, {id, name})
+  }
+
+  onInit (callback) {
+    this.socket.on(TYPES.EVENTS.INITIALED, data => {
       callback(data)
     })
   }
 
   move (striker) {
-    this.socket.emit(TYPES.EVENTS.MOVE, striker)
+    const {id, name, x, y} = striker
+    this.socket.emit(TYPES.EVENTS.MOVE, {id, name, x, y})
   }
 
+  onMove (callback) {
+    this.socket.on(TYPES.EVENTS.MOVED, data => {
+      callback(data)
+    })
+  }
 }

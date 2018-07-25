@@ -1,3 +1,3 @@
 module.exports = INFO = {
-  LIMIT_NUMBER: 4
+  LIMIT_NUMBER: 1000
 }

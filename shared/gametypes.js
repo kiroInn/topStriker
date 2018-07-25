@@ -1,9 +1,10 @@
 const TYPES = {
   EVENTS: {
-    INIT: 'init',
-    ON_INIT: 'onInit',
+    CONNECTED: 'connect',
+    INITIAL: 'INITIAL',
+    INITIALED: 'INITIALED',
     MOVE: 'move',
-    ON_MOVE: 'onMove'
+    MOVED: 'onMove'
   }
 }
 
