@@ -7,7 +7,7 @@ export class Connect {
   }
 
   connect () {
-    this.socket = io('ws://localhost:3000')
+    this.socket = io(`ws://${window.location.hostname}:3000`)
   }
 
   onConnect (callback) {
