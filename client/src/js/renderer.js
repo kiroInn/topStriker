@@ -13,7 +13,7 @@ export class Renderer {
 
   render (strikers) {
     this.clear()
-    // TODO this.drawBackground()
+    this.drawBackground()
     _.each(strikers, striker => {
       if (_.get(striker, 'sprite.cells').length && _.isFunction(striker.animation)) striker.animation()
       this.drawStriker(striker)
