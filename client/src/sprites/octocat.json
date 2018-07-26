@@ -1,0 +1,31 @@
+{
+  "id": "octocat",
+  "width": 32,
+  "height": 32,
+  "animations": [
+    {
+      "left": 0,
+      "top": 0,
+      "width": 32,
+      "height": 32
+    },
+    {
+      "left": 32,
+      "top": 0,
+      "width": 32,
+      "height": 32
+    },
+    {
+      "left": 64,
+      "top": 0,
+      "width": 32,
+      "height": 32
+    },
+    {
+      "left": 96,
+      "top": 0,
+      "width": 32,
+      "height": 32
+    }
+  ]
+}

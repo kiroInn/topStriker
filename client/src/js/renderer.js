@@ -11,13 +11,14 @@ export class Renderer {
     this.lastTime = 0
   }
 
-  render (strikers) {
+  render () {
     this.clear()
     this.drawBackground()
-    _.each(strikers, striker => {
+    _.each(this.game.strikers, striker => {
       if (_.get(striker, 'sprite.cells').length && _.isFunction(striker.animation)) striker.animation()
-      this.drawStriker(striker)
+      this.drawSprite(striker)
     })
+    this.drawSprite(this.game.ball)
     this.drawFps()
   }
 
@@ -33,11 +34,11 @@ export class Renderer {
     this.drawPattern(img, bgW, bgH)
   }
 
-  drawStriker (striker) {
-    if (!_.get(striker, 'sprite.cells').length) return false
-    let cell = striker.sprite.cells[striker.cellIndex]
-    this.drawImage(striker.sprite.image, cell.left, cell.top, cell.width, cell.height, striker.x, striker.y, cell.width / 3, cell.height / 3)
-    this.drawText(striker.name, (striker.x + striker.nameOffsetX), (striker.y + striker.nameOffsetY), true, '#fcda5c', '#fcda5c')
+  drawSprite (value) {
+    if (!_.has(value, 'sprite.cells') || !_.get(value, 'sprite.cells').length) return false
+    let cell = value.sprite.cells[value.cellIndex]
+    this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, cell.width, cell.height)
+    this.drawText(value.name, (value.x + value.nameOffsetX), (value.y + value.nameOffsetY), true, '#fcda5c', '#fcda5c')
   }
 
   drawPattern (img, w, h) {

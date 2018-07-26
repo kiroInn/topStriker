@@ -1,4 +1,6 @@
 import {Entity} from './entity'
+import {Sprite} from './sprite'
+import {IMAGER} from './const'
 
 const ANIMATION_INTERVAL = 100
 const ANIMATION_INTERVAL_EX = 20
@@ -8,11 +10,12 @@ export class Striker extends Entity {
     super(id, x, y)
     this.name = name
     this.nameOffsetY = 0
-    this.nameOffsetX = 35
+    this.nameOffsetX = 15
     this.speed = 128
     this.cellIndex = 0
     this.isMoving = false
     this.lastTime = new Date()
+    this.setSprite(new Sprite(IMAGER.NYAN))
   }
 
   advance () {

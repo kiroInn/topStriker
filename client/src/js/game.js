@@ -1,9 +1,9 @@
 import _ from 'lodash'
 import {Striker} from './striker'
 import {Renderer} from './renderer'
-import {requestAnimationFrame} from './util'
-import {Sprite} from './sprite'
+import {requestAnimationFrame, Util} from './util'
 import {Connect} from './connect'
+import {Ball} from './ball'
 
 export class Game {
   constructor () {
@@ -12,6 +12,7 @@ export class Game {
     this.renderer = new Renderer(this)
     this.striker = null
     this.strikers = []
+    this.ball = {}
     this.connecter = null
     this.then = new Date()
     this.connecter = new Connect()
@@ -30,12 +31,6 @@ export class Game {
     this.currentStriker = {id, name}
   }
 
-  buildStriker ({id, name, x, y}) {
-    let striker = new Striker({id, name, x, y})
-    striker.setSprite(new Sprite('nyan'))
-    return striker
-  }
-
   connect () {
     this.connecter.connect()
     this.connecter.onConnect(() => {
@@ -46,14 +41,15 @@ export class Game {
   }
 
   receiveData () {
-    this.connecter.onInit(values => {
-      let strikers = []
-      _.each(values, value => {
-        let striker = this.buildStriker(value)
+    this.connecter.onInit(({strikers, ball}) => {
+      let values = []
+      _.each(strikers, value => {
+        let striker = new Striker(value)
         if (_.get(value, 'id') === this.currentStriker.id) this.striker = striker
-        strikers.push(striker)
+        values.push(striker)
       })
-      this.strikers = strikers
+      this.strikers = values
+      this.ball = new Ball({...ball, id: Util.guid()})
     })
 
     this.connecter.onMove(data => {

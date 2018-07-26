@@ -5,6 +5,7 @@ let INFO = require('./const')
 let _ = require('lodash')
 
 let strikers = []
+let ball = {x: 100, y: 100}
 
 io.on('connection', function (client) {
 
@@ -16,7 +17,7 @@ io.on('connection', function (client) {
       let striker = {name, id, x: 150, y: number * 70}
       strikers.push(striker)
       console.log('strikers', strikers)
-      io.emit(TYPES.EVENTS.INITIALED, strikers)
+      io.emit(TYPES.EVENTS.INITIALED, {strikers, ball})
     } else {
       console.log('strikers is fully')
     }
