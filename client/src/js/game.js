@@ -95,6 +95,12 @@ export class Game {
       if (this.striker.x >= this.renderer.canvas.width) this.striker.x = this.renderer.canvas.width
       this.connecter.move(this.striker)
     }
+    _.each(this.strikers, item => {
+      if (_.get(item, 'id') === this.striker.id) {
+        item.x = this.striker.x
+        item.y = this.striker.y
+      }
+    })
   }
 
   setImage (k, v) {
