@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import TYPES from '../../../shared/gametypes'
+import TYPES from '../../../shared/message'
 
 export class Connect {
   constructor () {
@@ -28,8 +28,8 @@ export class Connect {
   }
 
   move (striker) {
-    const {id, name, x, y} = striker
-    this.socket.emit(TYPES.EVENTS.MOVE, {id, name, x, y})
+    const {id, x, y} = striker
+    this.socket.emit(TYPES.EVENTS.MOVE, {id, x, y})
   }
 
   onMove (callback) {

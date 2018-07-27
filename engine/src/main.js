@@ -1,6 +1,6 @@
 let server = require('http').createServer()
 let io = require('socket.io')(server)
-let TYPES = require('../../shared/gametypes')
+let TYPES = require('../../shared/message')
 let INFO = require('./const')
 let _ = require('lodash')
 
