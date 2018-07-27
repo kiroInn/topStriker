@@ -11,7 +11,7 @@ export class Connect {
   }
 
   onConnect (callback) {
-    this.socket.on(TYPES.EVENTS.CONNECTED, () => {
+    this.socket.on('connect', () => {
       callback()
     })
   }

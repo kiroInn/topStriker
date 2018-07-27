@@ -8,5 +8,4 @@ export class Ball extends Entity {
     this.cellIndex = 0
     this.setSprite(new Sprite(IMAGER.BALL))
   }
-
 }

@@ -16,9 +16,9 @@ export class Renderer {
     this.drawBackground()
     _.each(this.game.strikers, striker => {
       if (_.get(striker, 'sprite.cells').length && _.isFunction(striker.animation)) striker.animation()
-      this.drawSprite(striker)
+      this.drawEntity(striker)
     })
-    this.drawSprite(this.game.ball)
+    this.drawEntity(this.game.ball)
     this.drawFps()
   }
 
@@ -34,9 +34,9 @@ export class Renderer {
     this.drawPattern(img, bgW, bgH)
   }
 
-  drawSprite (value) {
+  drawEntity (value) {
     if (!_.has(value, 'sprite.cells') || !_.get(value, 'sprite.cells').length) return false
-    let cell = value.sprite.cells[value.cellIndex]
+    let cell = value.sprite.getCurrentCell()
     this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, cell.width, cell.height)
     this.drawText(value.name, (value.x + value.nameOffsetX), (value.y + value.nameOffsetY), true, '#fcda5c', '#fcda5c')
   }

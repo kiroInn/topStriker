@@ -1,10 +1,9 @@
 const TYPES = {
   EVENTS: {
-    CONNECTED: 0,
-    INITIAL: 1,
-    INITIALED: 2,
-    MOVE: 3,
-    MOVED: 4
+    INITIAL: 0,
+    INITIALED: 1,
+    MOVE: 2,
+    MOVED: 3
   }
 }
 

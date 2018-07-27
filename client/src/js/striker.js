@@ -12,24 +12,19 @@ export class Striker extends Entity {
     this.nameOffsetY = 0
     this.nameOffsetX = 15
     this.speed = 128
-    this.cellIndex = 0
     this.isMoving = false
     this.lastTime = new Date()
     this.setSprite(new Sprite(IMAGER.NYAN))
-  }
-
-  advance () {
-    this.cellIndex === this.sprite.cells.length - 1 ? this.cellIndex = 0 : this.cellIndex++
   }
 
   animation () {
     let nowTime = new Date()
     let diffTime = nowTime.getTime() - this.lastTime.getTime()
     if (this.isMoving && diffTime >= ANIMATION_INTERVAL_EX) {
-      this.advance()
+      this.sprite.advance()
       this.lastTime = nowTime
     } else if (diffTime >= ANIMATION_INTERVAL) {
-      this.advance()
+      this.sprite.advance()
       this.lastTime = nowTime
     }
   }

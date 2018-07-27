@@ -8,7 +8,7 @@ let strikers = []
 let ball = {x: 100, y: 100}
 
 io.on('connection', function (client) {
-
+  console.log('connection...')
   client.on(TYPES.EVENTS.INITIAL, (data) => {
     console.log(`on event ${TYPES.EVENTS.INITIAL}`, data)
     let {id, name} = data
