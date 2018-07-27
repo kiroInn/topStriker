@@ -37,7 +37,7 @@ export class Renderer {
   drawEntity (value) {
     if (!_.has(value, 'sprite.cells') || !_.get(value, 'sprite.cells').length) return false
     let cell = value.sprite.getCurrentCell()
-    this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, cell.width, cell.height)
+    this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, this.canvas.width / FIELD_NUMBER.WIDTH, this.canvas.height / FIELD_NUMBER.HEIGHT)
     this.drawText(value.name, (value.x + value.nameOffsetX), (value.y + value.nameOffsetY), true, '#fcda5c', '#fcda5c')
   }
 

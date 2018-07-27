@@ -2,7 +2,7 @@ import {Entity} from './entity'
 import {Sprite} from './sprite'
 import {IMAGER} from './const'
 
-const ANIMATION_INTERVAL = 100
+const ANIMATION_INTERVAL = 120
 const ANIMATION_INTERVAL_EX = 20
 
 export class Striker extends Entity {

@@ -54,6 +54,7 @@ export class Game {
 
     this.connecter.onMove(data => {
       let {id, x, y} = data
+      if (id === this.striker.id) return true
       _.each(this.strikers, item => {
         if (item.id === id) {
           item.isMoving = true
