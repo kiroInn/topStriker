@@ -4,6 +4,7 @@ import {Renderer} from './renderer'
 import {requestAnimationFrame, Util} from './util'
 import {Connect} from './connect'
 import {Ball} from './ball'
+import {Updater} from './updater'
 
 export class Game {
   constructor () {
@@ -14,8 +15,8 @@ export class Game {
     this.strikers = []
     this.ball = {}
     this.connecter = null
-    this.then = new Date()
     this.connecter = new Connect()
+    this.updater = new Updater(this)
     window.addEventListener('keydown', e => {
       this.keysDown[e.keyCode] = true
       if (_.has(this.striker, 'isMoving')) this.striker.isMoving = true
@@ -37,7 +38,7 @@ export class Game {
       this.connecter.init(this.currentStriker)
       this.receiveData()
     })
-    this.run()
+    this.tick()
   }
 
   receiveData () {
@@ -65,43 +66,10 @@ export class Game {
     })
   }
 
-  run () {
-    let now = Date.now();
-    let duration = now - this.then
-    this.update(duration / 1000)
+  tick () {
+    this.updater.update()
     this.renderer.render(this.strikers)
-    this.then = now
-    requestAnimationFrame(() => this.run())
-  }
-
-  update (duration) {
-    if (_.isNull(this.striker)) return
-    if (38 in this.keysDown) {
-      this.striker.y -= this.striker.speed * duration
-      if (this.striker.y <= 0) this.striker.y = 0
-      this.connecter.move(this.striker)
-    }
-    if (40 in this.keysDown) {
-      this.striker.y += this.striker.speed * duration
-      if (this.striker.y >= this.renderer.canvas.height) this.striker.y = this.renderer.canvas.height
-      this.connecter.move(this.striker)
-    }
-    if (37 in this.keysDown) {
-      this.striker.x -= this.striker.speed * duration
-      if (this.striker.x <= 0) this.striker.x = 0
-      this.connecter.move(this.striker)
-    }
-    if (39 in this.keysDown) {
-      this.striker.x += this.striker.speed * duration
-      if (this.striker.x >= this.renderer.canvas.width) this.striker.x = this.renderer.canvas.width
-      this.connecter.move(this.striker)
-    }
-    _.each(this.strikers, item => {
-      if (_.get(item, 'id') === this.striker.id) {
-        item.x = this.striker.x
-        item.y = this.striker.y
-      }
-    })
+    requestAnimationFrame(() => this.tick())
   }
 
   setImage (k, v) {
