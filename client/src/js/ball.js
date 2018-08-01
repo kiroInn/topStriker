@@ -9,4 +9,8 @@ export class Ball extends Entity {
     this.lastTime = new Date()
     this.setSprite(new Sprite(IMAGER.BALL))
   }
+
+  kick () {
+
+  }
 }
