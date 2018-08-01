@@ -20,6 +20,7 @@ export class Game {
     window.addEventListener('keydown', e => {
       this.keysDown[e.keyCode] = true
       if (_.has(this.striker, 'isMoving')) this.striker.isMoving = true
+      if (e.keyCode === 65) this.ball.kick()
     }, false)
 
     window.addEventListener('keyup', (e) => {
@@ -38,7 +39,6 @@ export class Game {
       this.connecter.init(this.currentStriker)
       this.receiveData()
     })
-    this.tick()
   }
 
   receiveData () {
@@ -51,6 +51,7 @@ export class Game {
       })
       this.strikers = values
       this.ball = new Ball({...ball, id: Util.guid()})
+      this.tick()
     })
 
     this.connecter.onMove(data => {

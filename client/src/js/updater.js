@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import {FIELD_NUMBER} from './const'
 
 export class Updater {
   constructor (game) {
@@ -10,6 +11,7 @@ export class Updater {
     let now = Date.now();
     let duration = now - this.then
     this.updateEntity(duration / 1000)
+    this.updateBall()
     this.then = now
   }
 
@@ -24,7 +26,7 @@ export class Updater {
     }
     if (40 in this.game.keysDown) {
       striker.y += striker.speed * duration
-      if (striker.y >= this.game.renderer.canvas.height) striker.y = this.game.renderer.canvas.height
+      if (striker.y + this.game.renderer.canvas.height / FIELD_NUMBER.HEIGHT >= this.game.renderer.canvas.height) striker.y = this.game.renderer.canvas.height - this.game.renderer.canvas.height / FIELD_NUMBER.HEIGHT
       this.game.connecter.move(striker)
     }
     if (37 in this.game.keysDown) {
@@ -34,7 +36,7 @@ export class Updater {
     }
     if (39 in this.game.keysDown) {
       striker.x += striker.speed * duration
-      if (striker.x >= this.game.renderer.canvas.width) striker.x = this.game.renderer.canvas.width
+      if (striker.x + this.game.renderer.canvas.width / FIELD_NUMBER.WIDTH >= this.game.renderer.canvas.width) striker.x = this.game.renderer.canvas.width - this.game.renderer.canvas.width / FIELD_NUMBER.WIDTH
       this.game.connecter.move(striker)
     }
     _.each(this.game.strikers, item => {
@@ -43,5 +45,12 @@ export class Updater {
         item.y = striker.y
       }
     })
+  }
+
+  updateBall () {
+    if (this.game.ball.canMove()) {
+      this.game.ball.move()
+      if (this.game.ball.x + 64 >= this.game.renderer.canvas.width) this.game.ball.x = this.game.renderer.canvas.width - 64
+    }
   }
 }
