@@ -10,13 +10,12 @@ export const FIELD_NUMBER = {
 }
 export const IMAGER = {
   BACKGROUND: 'background',
-  BORDER: 'border',
   NYAN: 'nyan',
   BALL: 'ball',
   OCTOCAT: 'octocat'
 }
 
-export const IMAGES = [IMAGER.BACKGROUND, IMAGER.NYAN, IMAGER.BORDER, IMAGER.BALL, IMAGER.OCTOCAT]
+export const IMAGES = [IMAGER.BACKGROUND, IMAGER.NYAN, IMAGER.BALL, IMAGER.OCTOCAT]
 
 export const THEME = {
   primary: '#5c3711',
