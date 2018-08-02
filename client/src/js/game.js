@@ -73,6 +73,7 @@ export class Game {
   }
 
   canDribbling () {
+    // TODO implements dribbling     
     return true
     // if (this.ball.status === TYPES.STATUS.BALL.IDLE) {
     //   this.ball.x + this.striker.sprite.width + 1

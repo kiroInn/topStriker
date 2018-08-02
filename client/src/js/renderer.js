@@ -9,6 +9,7 @@ export class Renderer {
     this.context = this.canvas.getContext('2d')
     this.canvas.width = this.bgCanvas.width = document.body.clientWidth
     this.canvas.height = this.bgCanvas.height = document.body.clientHeight
+    this.gridX = this.canvas.width / FIELD_NUMBER.WIDTH
     console.log('w, h', this.canvas.width / FIELD_NUMBER.WIDTH, this.canvas.height / FIELD_NUMBER.HEIGHT)
     this.drawBackground()
     this.lastTime = 0
@@ -64,7 +65,9 @@ export class Renderer {
   }
 
   drawImage (image, sx, sy, sw, sh, dx, dy, dw, dh) {
+    this.context.save()
     this.context.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)
+    this.context.restore()
   }
 
   drawText (text, x, y, centered, color, strokeColor) {
