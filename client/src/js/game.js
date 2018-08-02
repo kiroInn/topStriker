@@ -5,6 +5,7 @@ import {requestAnimationFrame, Util} from './util'
 import {Connect} from './connect'
 import {Ball} from './ball'
 import {Updater} from './updater'
+import * as TYPES from '../../../shared/message'
 
 export class Game {
   constructor () {
@@ -39,6 +40,7 @@ export class Game {
       this.connecter.init(this.currentStriker)
       this.receiveData()
     })
+    this.tick()
   }
 
   receiveData () {
@@ -51,19 +53,23 @@ export class Game {
       })
       this.strikers = values
       this.ball = new Ball({...ball, id: Util.guid()})
-      this.tick()
     })
 
     this.connecter.onMove(data => {
-      let {id, x, y} = data
-      if (id === this.striker.id) return true
-      _.each(this.strikers, item => {
-        if (item.id === id) {
-          item.isMoving = true
-          item.x = x
-          item.y = y
-        }
-      })
+      let {id, x, y, type} = data
+      if (type === TYPES.ENTITY.STRIKER) {
+        if (id === this.striker.id) return true
+        _.each(this.strikers, item => {
+          if (item.id === id) {
+            item.isMoving = true
+            item.setPosition(x, y)
+          }
+        })
+      } else if (type === TYPES.ENTITY.BALL) {
+        if (id === this.ball.id) return true
+        this.ball.setPosition(x, y)
+      }
+
     })
   }
 

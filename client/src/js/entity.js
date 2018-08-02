@@ -1,8 +1,7 @@
 export class Entity {
-  constructor (id, x = 0, y = 0) {
+  constructor (id, type) {
     this.id = id
-    this.x = x
-    this.y = y
+    this.type = type
 
     // renderer
     this.sprite = null

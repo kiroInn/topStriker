@@ -1,13 +1,15 @@
 import {Entity} from './entity'
 import {Sprite} from './sprite'
 import {IMAGER} from './const'
+import * as TYPES from '../../../shared/message'
 
 const ANIMATION_INTERVAL = 120
 const ANIMATION_INTERVAL_EX = 20
 
 export class Striker extends Entity {
   constructor ({id, name, x, y}) {
-    super(id, x, y)
+    super(id, TYPES.ENTITY.STRIKER)
+    this.setPosition(x, y)
     this.name = name
     this.nameOffsetY = 0
     this.nameOffsetX = 15

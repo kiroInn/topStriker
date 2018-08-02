@@ -8,6 +8,7 @@ let strikers = []
 let ball = {x: 100, y: 100}
 
 io.on('connection', function (client) {
+
   console.log('connection...')
   client.on(TYPES.EVENTS.INITIAL, (data) => {
     console.log(`on event ${TYPES.EVENTS.INITIAL}`, data)
@@ -25,13 +26,13 @@ io.on('connection', function (client) {
 
   client.on(TYPES.EVENTS.MOVE, function (data) {
     console.log(`on event ${TYPES.EVENTS.MOVE}`, data)
-    const {id, x, y} = data
-    _.each(strikers, item => {
-      if (_.get(item, 'id') === id) {
-        item.x = x
-        item.y = y
-      }
-    })
+    const {type} = data
+    if (type === TYPES.ENTITY.STRIKER) {
+      updateStrikers(data)
+    }
+    if (type === TYPES.ENTITY.BALL) {
+      updateBall(data)
+    }
     io.emit(TYPES.EVENTS.MOVED, data)
   })
 
@@ -39,6 +40,20 @@ io.on('connection', function (client) {
     console.log('on disconnect')
   })
 })
+
+function updateStrikers ({id, x, y}) {
+  _.each(strikers, item => {
+    if (_.get(item, 'id') === id) {
+      item.x = x
+      item.y = y
+    }
+  })
+}
+
+function updateBall ({x, y}) {
+  ball.x = x
+  ball.y = y
+}
 
 server.listen(3000)
 console.log('Top striker engine is starting...')

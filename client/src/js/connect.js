@@ -27,9 +27,9 @@ export class Connect {
     })
   }
 
-  move (striker) {
-    const {id, x, y} = striker
-    this.socket.emit(TYPES.EVENTS.MOVE, {id, x, y})
+  move (entity) {
+    const {id, x, y, type} = entity
+    this.socket.emit(TYPES.EVENTS.MOVE, {id, x, y, type})
   }
 
   onMove (callback) {
