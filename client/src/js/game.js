@@ -11,23 +11,14 @@ export class Game {
   constructor () {
     this.keysDown = {}
     this.imager = {}
-    this.renderer = new Renderer(this)
+    this.renderer = null
     this.striker = null
     this.strikers = []
     this.ball = {}
     this.connecter = null
     this.connecter = new Connect()
     this.updater = new Updater(this)
-    window.addEventListener('keydown', e => {
-      this.keysDown[e.keyCode] = true
-      this.striker.status = TYPES.STATUS.STRIKER.RUNNING
-      if (e.keyCode === 65) this.ball.kick()
-    }, false)
 
-    window.addEventListener('keyup', (e) => {
-      delete this.keysDown[e.keyCode]
-      this.striker.status = TYPES.STATUS.STRIKER.IDLE
-    }, false)
   }
 
   setCurrentStriker ({id, name}) {
@@ -40,6 +31,8 @@ export class Game {
       this.connecter.init(this.currentStriker)
       this.receiveData()
     })
+    this.initListener()
+    this.renderer = new Renderer(this)
     this.tick()
   }
 
@@ -75,7 +68,7 @@ export class Game {
 
   tick () {
     this.updater.update()
-    this.renderer.render(this.strikers)
+    this.renderer.render()
     requestAnimationFrame(() => this.tick())
   }
 
@@ -91,5 +84,18 @@ export class Game {
 
   setImage (k, v) {
     this.imager[k] = v
+  }
+
+  initListener () {
+    window.addEventListener('keydown', e => {
+      this.keysDown[e.keyCode] = true
+      this.striker.status = TYPES.STATUS.STRIKER.RUNNING
+      if (e.keyCode === 65) this.ball.kick()
+    }, false)
+
+    window.addEventListener('keyup', (e) => {
+      delete this.keysDown[e.keyCode]
+      this.striker.status = TYPES.STATUS.STRIKER.IDLE
+    }, false)
   }
 }

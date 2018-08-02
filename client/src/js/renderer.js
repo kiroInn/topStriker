@@ -3,17 +3,19 @@ import {FIELD_NUMBER, IMAGER} from './const'
 export class Renderer {
   constructor (game) {
     this.game = game
+    this.bgCanvas = document.querySelector('#background')
+    this.bgContext = this.bgCanvas.getContext('2d')
     this.canvas = document.querySelector('#game')
     this.context = this.canvas.getContext('2d')
-    this.canvas.width = document.body.clientWidth
-    this.canvas.height = document.body.clientHeight
+    this.canvas.width = this.bgCanvas.width = document.body.clientWidth
+    this.canvas.height = this.bgCanvas.height = document.body.clientHeight
     console.log('w, h', this.canvas.width / FIELD_NUMBER.WIDTH, this.canvas.height / FIELD_NUMBER.HEIGHT)
+    this.drawBackground()
     this.lastTime = 0
   }
 
   render () {
     this.clear()
-    this.drawBackground()
     _.each(this.game.strikers, striker => {
       if (_.get(striker, 'sprite.cells').length && _.isFunction(striker.animation)) striker.animation()
       this.drawEntity(striker)
@@ -22,16 +24,11 @@ export class Renderer {
     this.drawFps()
   }
 
-  drawBorder () {
-    let img = this.game.imager[IMAGER.BORDER]
-    this.drawPattern(img, this.canvas.width, this.canvas.height)
-  }
-
   drawBackground () {
     let bgW = this.canvas.width / FIELD_NUMBER.WIDTH
     let bgH = this.canvas.height / FIELD_NUMBER.HEIGHT
     let img = this.game.imager[IMAGER.BACKGROUND]
-    this.drawPattern(img, bgW, bgH)
+    this.drawPattern(img, bgW, bgH, this.bgContext)
   }
 
   drawEntity (value) {
@@ -41,21 +38,20 @@ export class Renderer {
     this.drawText(value.name, (value.x + value.nameOffsetX), (value.y + value.nameOffsetY), true, '#fcda5c', '#fcda5c')
   }
 
-  drawPattern (img, w, h) {
+  drawPattern (img, w, h, context) {
     let tempCanvas = document.createElement('canvas'),
       tCtx = tempCanvas.getContext('2d')
-
     tempCanvas.width = w
     tempCanvas.height = h
     tCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, w, h)
 
     // use getContext to use the canvas for drawing
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    this.context.fillStyle = this.context.createPattern(tempCanvas, 'repeat')
+    context.clearRect(0, 0, this.bgCanvas.width, this.bgCanvas.height)
+    context.fillStyle = context.createPattern(tempCanvas, 'repeat')
 
-    this.context.beginPath()
-    this.context.rect(0, 0, this.canvas.width, this.canvas.height)
-    this.context.fill()
+    context.beginPath()
+    context.rect(0, 0, this.bgCanvas.width, this.bgCanvas.height)
+    context.fill()
   }
 
   clipStriker (striker) {
