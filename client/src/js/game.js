@@ -20,13 +20,13 @@ export class Game {
     this.updater = new Updater(this)
     window.addEventListener('keydown', e => {
       this.keysDown[e.keyCode] = true
-      if (_.has(this.striker, 'isMoving')) this.striker.isMoving = true
+      this.striker.status = TYPES.STATUS.STRIKER.RUNNING
       if (e.keyCode === 65) this.ball.kick()
     }, false)
 
     window.addEventListener('keyup', (e) => {
       delete this.keysDown[e.keyCode]
-      if (_.has(this.striker, 'isMoving')) this.striker.isMoving = false
+      this.striker.status = TYPES.STATUS.STRIKER.IDLE
     }, false)
   }
 
@@ -61,7 +61,7 @@ export class Game {
         if (id === this.striker.id) return true
         _.each(this.strikers, item => {
           if (item.id === id) {
-            item.isMoving = true
+            item.status = TYPES.STATUS.STRIKER.RUNNING
             item.setPosition(x, y)
           }
         })
@@ -78,6 +78,16 @@ export class Game {
     this.renderer.render(this.strikers)
     requestAnimationFrame(() => this.tick())
   }
+
+  canDribbling () {
+    return true
+    // if (this.ball.status === TYPES.STATUS.BALL.IDLE) {
+    //   this.ball.x + this.striker.sprite.width + 1
+    //   if (this.striker.x + this.striker.sprite.width + 1 >= this.ball.x) {
+    //   }
+    // }
+  }
+
 
   setImage (k, v) {
     this.imager[k] = v

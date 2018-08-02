@@ -8,6 +8,17 @@ const TYPES = {
   ENTITY: {
     STRIKER: 0,
     BALL: 1
+  },
+  STATUS: {
+    BALL: {
+      IDLE: 0,
+      DRIBBLED: 1,
+      FLIGHT: 2
+    },
+    STRIKER: {
+      IDLE: 0,
+      RUNNING: 1
+    }
   }
 }
 

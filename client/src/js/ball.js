@@ -13,14 +13,18 @@ export class Ball extends Entity {
     this.kickDistance = 0
     this.speed = 1
     this.moveSpeed = 0
+    this.status = TYPES.STATUS.BALL.IDLE
     this.lastTime = new Date()
     this.setSprite(new Sprite(IMAGER.BALL))
   }
 
   kick (angle) {
-    this.moveSpeed = 0
-    this.kickDistance = DISTANCE
-    this.kickAngle = angle
+    if (this.status === TYPES.STATUS.BALL.DRIBBLED) {
+      this.status = TYPES.STATUS.BALL.FLIGHT
+      this.moveSpeed = 0
+      this.kickDistance = DISTANCE
+      this.kickAngle = angle
+    }
   }
 
   canMove () {

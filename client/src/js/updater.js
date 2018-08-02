@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import {FIELD_NUMBER} from './const'
+import * as TYPES from '../../../shared/message'
 
 export class Updater {
   constructor (game) {
@@ -48,8 +49,15 @@ export class Updater {
         }
       })
       this.game.connecter.move(striker)
+      if (this.game.canDribbling()) {
+        this.game.ball.x = striker.x + 30
+        this.game.ball.y = striker.y
+        this.game.connecter.move(this.game.ball)
+        this.game.ball.status = TYPES.STATUS.BALL.DRIBBLED
+      }
     }
   }
+
 
   updateBall () {
     if (_.invoke(this.game.ball, 'canMove')) {
