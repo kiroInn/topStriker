@@ -27,10 +27,10 @@ io.on('connection', function (client) {
   client.on(TYPES.EVENTS.MOVE, function (data) {
     console.log(`on event ${TYPES.EVENTS.MOVE}`, data)
     const {type} = data
-    if (type === TYPES.ENTITY.STRIKER) {
+    if (type === TYPES.ENTITIES.STRIKER) {
       updateStrikers(data)
     }
-    if (type === TYPES.ENTITY.BALL) {
+    if (type === TYPES.ENTITIES.BALL) {
       updateBall(data)
     }
     io.emit(TYPES.EVENTS.MOVED, data)

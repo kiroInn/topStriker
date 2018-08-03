@@ -50,7 +50,7 @@ export class Game {
 
     this.connecter.onMove(data => {
       let {id, x, y, type} = data
-      if (type === TYPES.ENTITY.STRIKER) {
+      if (type === TYPES.ENTITIES.STRIKER) {
         if (id === this.striker.id) return true
         _.each(this.strikers, item => {
           if (item.id === id) {
@@ -58,7 +58,7 @@ export class Game {
             item.setPosition(x, y)
           }
         })
-      } else if (type === TYPES.ENTITY.BALL) {
+      } else if (type === TYPES.ENTITIES.BALL) {
         if (id === this.ball.id) return true
         this.ball.setPosition(x, y)
       }
@@ -73,7 +73,7 @@ export class Game {
   }
 
   canDribbling () {
-    // TODO implements dribbling     
+    // TODO implements dribbling
     return true
     // if (this.ball.status === TYPES.STATUS.BALL.IDLE) {
     //   this.ball.x + this.striker.sprite.width + 1

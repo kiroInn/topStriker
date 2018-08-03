@@ -5,7 +5,7 @@ const TYPES = {
     MOVE: 2,
     MOVED: 3
   },
-  ENTITY: {
+  ENTITIES: {
     STRIKER: 0,
     BALL: 1
   },

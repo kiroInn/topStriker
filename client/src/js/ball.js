@@ -7,7 +7,7 @@ const DISTANCE = 500
 
 export class Ball extends Entity {
   constructor ({id, x, y}) {
-    super(id, TYPES.ENTITY.BALL)
+    super(id, TYPES.ENTITIES.BALL)
     this.setPosition(x, y)
     this.cellIndex = 0
     this.kickDistance = 0
