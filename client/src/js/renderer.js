@@ -1,4 +1,5 @@
 import {FIELD_NUMBER, IMAGER} from './const'
+import {CLIENT_HEIGHT, CLIENT_WIDTH} from './map'
 
 export class Renderer {
   constructor (game) {
@@ -7,8 +8,8 @@ export class Renderer {
     this.bgContext = this.bgCanvas.getContext('2d')
     this.canvas = document.querySelector('#game')
     this.context = this.canvas.getContext('2d')
-    this.canvas.width = this.bgCanvas.width = document.body.clientWidth
-    this.canvas.height = this.bgCanvas.height = document.body.clientHeight
+    this.canvas.width = this.bgCanvas.width = CLIENT_WIDTH
+    this.canvas.height = this.bgCanvas.height = CLIENT_HEIGHT
     this.lastTime = 0
   }
 
@@ -23,8 +24,8 @@ export class Renderer {
   }
 
   drawBackground () {
-    let bgW = this.canvas.width / FIELD_NUMBER.WIDTH
-    let bgH = this.canvas.height / FIELD_NUMBER.HEIGHT
+    let bgW = this.canvas.width / 10
+    let bgH = this.canvas.height / 10
     let img = this.game.imager[IMAGER.BACKGROUND]
     this.drawPattern(img, bgW, bgH, this.bgContext)
   }
@@ -40,7 +41,7 @@ export class Renderer {
     if (_.get(value, 'sprite.cells.length') && _.isFunction(value.animation)) value.animation()
     if (!_.has(value, 'sprite.cells') || !_.get(value, 'sprite.cells').length) return false
     let cell = value.sprite.getCurrentCell()
-    this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, this.canvas.width / FIELD_NUMBER.WIDTH, this.canvas.height / FIELD_NUMBER.HEIGHT)
+    this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, this.canvas.width * cell.width / FIELD_NUMBER.WIDTH, this.canvas.height * cell.height / FIELD_NUMBER.HEIGHT)
     this.drawText(value.name, (value.x + value.nameOffsetX), (value.y + value.nameOffsetY), true, '#fcda5c', '#fcda5c')
   }
 
@@ -61,9 +62,7 @@ export class Renderer {
   }
 
   drawImage (image, sx, sy, sw, sh, dx, dy, dw, dh) {
-    this.context.save()
     this.context.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)
-    this.context.restore()
   }
 
   drawText (text, x, y, centered, color, strokeColor) {

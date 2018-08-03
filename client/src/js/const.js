@@ -5,8 +5,8 @@ export const TYPES = {
 }
 
 export const FIELD_NUMBER = {
-  WIDTH: 10,
-  HEIGHT: 10
+  WIDTH: 736,
+  HEIGHT: 414
 }
 export const IMAGER = {
   BACKGROUND: 'background',

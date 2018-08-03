@@ -1,5 +1,6 @@
 import io from 'socket.io-client'
 import TYPES from '../../../shared/message'
+import {Map} from './map'
 
 export class Connect {
   constructor () {
@@ -29,7 +30,8 @@ export class Connect {
 
   move (entity) {
     const {id, x, y, type} = entity
-    this.socket.emit(TYPES.EVENTS.MOVE, {id, x, y, type})
+    const {rx, ry} = Map.getRelativePosition(x, y)
+    this.socket.emit(TYPES.EVENTS.MOVE, {id, x: rx, y: ry, type})
   }
 
   onMove (callback) {

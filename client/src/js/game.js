@@ -7,6 +7,7 @@ import {Ball} from './ball'
 import {Updater} from './updater'
 import * as TYPES from '../../../shared/message'
 import {IMAGES} from './const'
+import {Map} from './map'
 
 export class Game {
   constructor () {
@@ -54,19 +55,19 @@ export class Game {
 
     this.connecter.onMove(data => {
       let {id, x, y, type} = data
+      const value = Map.getAbsolutePosition(x, y)
       if (type === TYPES.ENTITIES.STRIKER) {
         if (id === this.striker.id) return true
         _.each(this.strikers, item => {
           if (item.id === id) {
             item.status = TYPES.STATUS.STRIKER.RUNNING
-            item.setPosition(x, y)
+            item.setPosition(value.x, value.y)
           }
         })
       } else if (type === TYPES.ENTITIES.BALL) {
         if (id === this.ball.id) return true
-        this.ball.setPosition(x, y)
+        this.ball.setPosition(value.x, value.y)
       }
-
     })
   }
 

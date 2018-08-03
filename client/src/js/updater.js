@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import {FIELD_NUMBER} from './const'
 import * as TYPES from '../../../shared/message'
+import {CLIENT_HEIGHT, CLIENT_WIDTH} from './map'
 
 export class Updater {
   constructor (game) {
@@ -28,7 +29,7 @@ export class Updater {
     }
     if (40 in this.game.keysDown) {
       striker.y += striker.speed * duration
-      if (striker.y + this.game.renderer.canvas.height / FIELD_NUMBER.HEIGHT >= this.game.renderer.canvas.height) striker.y = this.game.renderer.canvas.height - this.game.renderer.canvas.height / FIELD_NUMBER.HEIGHT
+      if (striker.y + CLIENT_HEIGHT / FIELD_NUMBER.HEIGHT >= CLIENT_HEIGHT) striker.y = CLIENT_HEIGHT - CLIENT_HEIGHT / FIELD_NUMBER.HEIGHT
       isMoving = true
     }
     if (37 in this.game.keysDown) {
@@ -38,7 +39,7 @@ export class Updater {
     }
     if (39 in this.game.keysDown) {
       striker.x += striker.speed * duration
-      if (striker.x + this.game.renderer.canvas.width / FIELD_NUMBER.WIDTH >= this.game.renderer.canvas.width) striker.x = this.game.renderer.canvas.width - this.game.renderer.canvas.width / FIELD_NUMBER.WIDTH
+      if (striker.x + CLIENT_WIDTH / FIELD_NUMBER.WIDTH >= CLIENT_WIDTH) striker.x = CLIENT_WIDTH - CLIENT_WIDTH / FIELD_NUMBER.WIDTH
       isMoving = true
     }
     if (isMoving) {
@@ -62,7 +63,7 @@ export class Updater {
   updateBall () {
     if (_.invoke(this.game.ball, 'canMove')) {
       this.game.ball.move()
-      if (this.game.ball.x + 64 >= this.game.renderer.canvas.width) this.game.ball.x = this.game.renderer.canvas.width - 64
+      if (this.game.ball.x + 64 >= CLIENT_WIDTH) this.game.ball.x = CLIENT_WIDTH - 64
       this.game.connecter.move(this.game.ball)
     }
   }
