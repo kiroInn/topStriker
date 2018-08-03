@@ -1,7 +1,6 @@
 import {Util} from './util'
 import {DOM} from './dom'
 import {Game} from './game'
-import {IMAGES} from './const'
 
 export class App {
   constructor () {
@@ -11,7 +10,7 @@ export class App {
     this.roomContainer = document.querySelector('#room')
     this.roomNumberInput = document.querySelector('#room input')
     this.roomNumberBtn = document.querySelector('#room button')
-    this.game = new Game()
+    this.game = null
     this.init()
   }
 
@@ -33,9 +32,10 @@ export class App {
       return false
     }
     DOM.hide(this.userContainer)
-    this.loadAssets().then(() => {
-      this.game.setCurrentStriker({id: Util.guid(), name: userName})
-      this.game.connect()
+    this.game = new Game()
+    this.game.loadAssets().then(() => {
+      this.game.setPlayer({id: Util.guid(), name: userName})
+      this.game.run()
     })
   }
 
@@ -46,21 +46,6 @@ export class App {
       return false
     }
     DOM.hide(this.roomContainer)
-  }
-
-  loadAssets () {
-    return new Promise(resolve => {
-      IMAGES.forEach((key, i) => {
-        import(`../img/common/${key}.png`).then(value => {
-          let img = new Image()
-          img.src = value.default
-          img.onload = () => {
-            this.game.setImage(key, img)
-            if (i === IMAGES.length - 1) resolve()
-          }
-        })
-      })
-    })
   }
 
 }

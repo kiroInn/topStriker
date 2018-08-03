@@ -6,34 +6,38 @@ import {Connect} from './connect'
 import {Ball} from './ball'
 import {Updater} from './updater'
 import * as TYPES from '../../../shared/message'
+import {IMAGES} from './const'
 
 export class Game {
   constructor () {
     this.keysDown = {}
     this.imager = {}
-    this.renderer = null
     this.striker = null
     this.strikers = []
     this.ball = {}
     this.connecter = null
-    this.connecter = new Connect()
     this.updater = new Updater(this)
-
+    this.renderer = new Renderer(this)
   }
 
-  setCurrentStriker ({id, name}) {
-    this.currentStriker = {id, name}
+  setPlayer ({id, name}) {
+    this.player = {id, name}
+  }
+
+  run () {
+    this.renderer.run()
+    this.initListener()
+    this.connect()
+    this.tick()
   }
 
   connect () {
+    this.connecter = new Connect()
     this.connecter.connect()
     this.connecter.onConnect(() => {
-      this.connecter.init(this.currentStriker)
+      this.connecter.init(this.player)
       this.receiveData()
     })
-    this.initListener()
-    this.renderer = new Renderer(this)
-    this.tick()
   }
 
   receiveData () {
@@ -41,7 +45,7 @@ export class Game {
       let values = []
       _.each(strikers, value => {
         let striker = new Striker(value)
-        if (_.get(value, 'id') === this.currentStriker.id) this.striker = striker
+        if (_.get(value, 'id') === this.player.id) this.striker = striker
         values.push(striker)
       })
       this.strikers = values
@@ -98,5 +102,20 @@ export class Game {
       delete this.keysDown[e.keyCode]
       this.striker.status = TYPES.STATUS.STRIKER.IDLE
     }, false)
+  }
+
+  loadAssets () {
+    return new Promise(resolve => {
+      IMAGES.forEach((key, i) => {
+        import(`../img/common/${key}.png`).then(value => {
+          let img = new Image()
+          img.src = value.default
+          img.onload = () => {
+            this.setImage(key, img)
+            if (i === IMAGES.length - 1) resolve()
+          }
+        })
+      })
+    })
   }
 }

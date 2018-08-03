@@ -9,19 +9,16 @@ export class Renderer {
     this.context = this.canvas.getContext('2d')
     this.canvas.width = this.bgCanvas.width = document.body.clientWidth
     this.canvas.height = this.bgCanvas.height = document.body.clientHeight
-    this.gridX = this.canvas.width / FIELD_NUMBER.WIDTH
-    console.log('w, h', this.canvas.width / FIELD_NUMBER.WIDTH, this.canvas.height / FIELD_NUMBER.HEIGHT)
-    this.drawBackground()
     this.lastTime = 0
+  }
+
+  run () {
+    this.drawBackground()
   }
 
   render () {
     this.clear()
-    _.each(this.game.strikers, striker => {
-      if (_.get(striker, 'sprite.cells').length && _.isFunction(striker.animation)) striker.animation()
-      this.drawEntity(striker)
-    })
-    this.drawEntity(this.game.ball)
+    this.drawEntities()
     this.drawFps()
   }
 
@@ -32,7 +29,15 @@ export class Renderer {
     this.drawPattern(img, bgW, bgH, this.bgContext)
   }
 
+  drawEntities () {
+    _.each(this.game.strikers, striker => {
+      this.drawEntity(striker)
+    })
+    this.drawEntity(this.game.ball)
+  }
+
   drawEntity (value) {
+    if (_.get(value, 'sprite.cells.length') && _.isFunction(value.animation)) value.animation()
     if (!_.has(value, 'sprite.cells') || !_.get(value, 'sprite.cells').length) return false
     let cell = value.sprite.getCurrentCell()
     this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, this.canvas.width / FIELD_NUMBER.WIDTH, this.canvas.height / FIELD_NUMBER.HEIGHT)
@@ -55,15 +60,6 @@ export class Renderer {
     context.fill()
   }
 
-  clipStriker (striker) {
-    let ctx = this.context
-    ctx.save()
-    ctx.beginPath()
-    ctx.arc(striker.x, striker.y, striker.width / 2, 0, Math.PI * 2, false)
-    ctx.clip()
-    ctx.restore()
-  }
-
   drawImage (image, sx, sy, sw, sh, dx, dy, dw, dh) {
     this.context.save()
     this.context.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)
@@ -84,27 +80,6 @@ export class Renderer {
       ctx.fillText(text, x, y)
       ctx.restore()
     }
-  }
-
-  drawArcs () {
-    let ctx = this.context
-    ctx.beginPath()
-    ctx.arc(150, 100, 60, 0, Math.PI * 1.5)
-    // ctx.closePath()
-    ctx.stroke()
-  }
-
-  drawLine () {
-    let ctx = this.context
-    ctx.lineWidth = 10
-    ctx.beginPath()
-    ctx.moveTo(0, 0)
-    ctx.lineTo(0, this.canvas.clientWidth)
-    ctx.stroke()
-    ctx.beginPath()
-    ctx.moveTo(0, 0)
-    ctx.bezierCurveTo(0, 0, 100, 100, 200, 200)
-    ctx.stroke()
   }
 
   drawFps () {
