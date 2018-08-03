@@ -16,13 +16,7 @@ export class App {
 
   init () {
     DOM.hide(this.roomContainer)
-    document.addEventListener('DOMContentLoaded', () => {
-      this.userNameBtn.addEventListener('click', () => this.selectUser())
-      this.roomNumberBtn.addEventListener('click', () => this.selectRoom())
-    })
-    window.matchMedia('(orientation:portrait)').addListener(function () {
-      location.reload()
-    })
+    this.initListener()
   }
 
   selectUser () {
@@ -48,6 +42,15 @@ export class App {
     DOM.hide(this.roomContainer)
   }
 
+  initListener () {
+    document.addEventListener('DOMContentLoaded', () => {
+      this.userNameBtn.addEventListener('click', () => this.selectUser())
+      this.roomNumberBtn.addEventListener('click', () => this.selectRoom())
+    })
+    window.matchMedia('(orientation:portrait)').addListener(function () {
+      location.reload()
+    })
+  }
 }
 
 new App()
