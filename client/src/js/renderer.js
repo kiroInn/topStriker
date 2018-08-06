@@ -1,5 +1,5 @@
-import {FIELD_NUMBER, IMAGER} from './const'
-import {CLIENT_HEIGHT, CLIENT_WIDTH} from './map'
+import {IMAGE_MANAGER} from './const'
+import {CLIENT_HEIGHT, CLIENT_WIDTH, GAME_HEIGHT, GAME_WIDTH} from './map'
 
 export class Renderer {
   constructor (game) {
@@ -26,7 +26,7 @@ export class Renderer {
   drawBackground () {
     let bgW = this.canvas.width / 10
     let bgH = this.canvas.height / 10
-    let img = this.game.imager[IMAGER.BACKGROUND]
+    let img = this.game.imager[IMAGE_MANAGER.BACKGROUND]
     this.drawPattern(img, bgW, bgH, this.bgContext)
   }
 
@@ -41,7 +41,7 @@ export class Renderer {
     if (_.get(value, 'sprite.cells.length') && _.isFunction(value.animation)) value.animation()
     if (!_.has(value, 'sprite.cells') || !_.get(value, 'sprite.cells').length) return false
     let cell = value.sprite.getCurrentCell()
-    this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, this.canvas.width * cell.width / FIELD_NUMBER.WIDTH, this.canvas.height * cell.height / FIELD_NUMBER.HEIGHT)
+    this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, this.canvas.width * cell.width / GAME_WIDTH, this.canvas.height * cell.height / GAME_HEIGHT)
     this.drawText(value.name, (value.x + value.nameOffsetX), (value.y + value.nameOffsetY), true, '#fcda5c', '#fcda5c')
   }
 

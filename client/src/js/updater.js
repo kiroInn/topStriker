@@ -1,7 +1,6 @@
 import _ from 'lodash'
-import {FIELD_NUMBER} from './const'
 import * as TYPES from '../../../shared/message'
-import {CLIENT_HEIGHT, CLIENT_WIDTH} from './map'
+import {CLIENT_HEIGHT, CLIENT_WIDTH, Map} from './map'
 
 export class Updater {
   constructor (game) {
@@ -29,7 +28,7 @@ export class Updater {
     }
     if (40 in this.game.keysDown) {
       striker.y += striker.speed * duration
-      if (striker.y + CLIENT_HEIGHT / FIELD_NUMBER.HEIGHT >= CLIENT_HEIGHT) striker.y = CLIENT_HEIGHT - CLIENT_HEIGHT / FIELD_NUMBER.HEIGHT
+      if (striker.y + Map.getAbsoluteHeight(striker.sprite.height) >= CLIENT_HEIGHT) striker.y = CLIENT_HEIGHT - Map.getAbsoluteHeight(striker.sprite.height)
       isMoving = true
     }
     if (37 in this.game.keysDown) {
@@ -39,7 +38,7 @@ export class Updater {
     }
     if (39 in this.game.keysDown) {
       striker.x += striker.speed * duration
-      if (striker.x + CLIENT_WIDTH / FIELD_NUMBER.WIDTH >= CLIENT_WIDTH) striker.x = CLIENT_WIDTH - CLIENT_WIDTH / FIELD_NUMBER.WIDTH
+      if (striker.x + Map.getAbsoluteWidth(striker.sprite.width) >= CLIENT_WIDTH) striker.x = CLIENT_WIDTH - Map.getAbsoluteWidth(striker.sprite.width)
       isMoving = true
     }
     if (isMoving) {
@@ -61,9 +60,10 @@ export class Updater {
 
 
   updateBall () {
+    let ball = this.
     if (_.invoke(this.game.ball, 'canMove')) {
       this.game.ball.move()
-      if (this.game.ball.x + 64 >= CLIENT_WIDTH) this.game.ball.x = CLIENT_WIDTH - 64
+      if (this.game.ball.x + Map.getAbsoluteWidth(strike.sprite.width) >= CLIENT_WIDTH) this.game.ball.x = CLIENT_WIDTH - 64
       this.game.connecter.move(this.game.ball)
     }
   }

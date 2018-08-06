@@ -1,6 +1,6 @@
 import {Entity} from './entity'
 import {Sprite} from './sprite'
-import {IMAGER} from './const'
+import {IMAGE_MANAGER} from './const'
 import * as TYPES from '../../../shared/message'
 
 const ANIMATION_INTERVAL = 120
@@ -16,7 +16,7 @@ export class Striker extends Entity {
     this.speed = 128
     this.status = TYPES.STATUS.STRIKER.IDLE
     this.lastTime = new Date()
-    this.setSprite(new Sprite(IMAGER.NYAN))
+    this.setSprite(new Sprite(IMAGE_MANAGER.NYAN))
   }
 
   animation () {

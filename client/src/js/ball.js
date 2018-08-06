@@ -1,6 +1,6 @@
 import {Entity} from './entity'
 import {Sprite} from './sprite'
-import {IMAGER} from './const'
+import {IMAGE_MANAGER} from './const'
 import * as TYPES from '../../../shared/message'
 
 const DISTANCE = 500
@@ -15,7 +15,7 @@ export class Ball extends Entity {
     this.moveSpeed = 0
     this.status = TYPES.STATUS.BALL.IDLE
     this.lastTime = new Date()
-    this.setSprite(new Sprite(IMAGER.BALL))
+    this.setSprite(new Sprite(IMAGE_MANAGER.BALL))
   }
 
   kick (angle) {
