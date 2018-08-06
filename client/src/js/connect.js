@@ -29,9 +29,9 @@ export class Connect {
   }
 
   move (entity) {
-    const {id, x, y, type} = entity
+    const {id, x, y, type, orientation} = entity
     const {rx, ry} = Map.getRelativePosition(x, y)
-    this.socket.emit(TYPES.EVENTS.MOVE, {id, x: rx, y: ry, type})
+    this.socket.emit(TYPES.EVENTS.MOVE, {id, x: rx, y: ry, type, orientation})
   }
 
   onMove (callback) {

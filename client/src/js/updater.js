@@ -25,6 +25,7 @@ export class Updater {
       striker.y -= striker.speed * duration
       if (striker.y <= 0) striker.y = 0
       isMoving = true
+
     }
     if (40 in this.game.keysDown) {
       striker.y += striker.speed * duration
@@ -34,11 +35,13 @@ export class Updater {
     if (37 in this.game.keysDown) {
       striker.x -= striker.speed * duration
       if (striker.x <= 0) striker.x = 0
+      striker.orientation = TYPES.ORIENTATIONS.LEFT
       isMoving = true
     }
     if (39 in this.game.keysDown) {
       striker.x += striker.speed * duration
       if (striker.x + Map.getAbsoluteWidth(striker.sprite.width) >= CLIENT_WIDTH) striker.x = CLIENT_WIDTH - Map.getAbsoluteWidth(striker.sprite.width)
+      striker.orientation = TYPES.ORIENTATIONS.RIGHT
       isMoving = true
     }
     if (isMoving) {

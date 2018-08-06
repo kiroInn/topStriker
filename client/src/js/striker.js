@@ -15,6 +15,7 @@ export class Striker extends Entity {
     this.nameOffsetX = 15
     this.speed = 128
     this.status = TYPES.STATUS.STRIKER.IDLE
+    this.orientation = TYPES.ORIENTATIONS.RIGHT
     this.lastTime = new Date()
     this.setSprite(new Sprite(IMAGE_MANAGER.NYAN))
   }

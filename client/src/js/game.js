@@ -54,12 +54,13 @@ export class Game {
     })
 
     this.connecter.onMove(data => {
-      let {id, x, y, type} = data
+      let {id, x, y, type, orientation} = data
       const value = Map.getAbsolutePosition(x, y)
       if (type === TYPES.ENTITIES.STRIKER) {
         if (id === this.striker.id) return true
         _.each(this.strikers, item => {
           if (item.id === id) {
+            item.orientation = orientation
             item.status = TYPES.STATUS.STRIKER.RUNNING
             item.setPosition(value.x, value.y)
           }
