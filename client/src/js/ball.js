@@ -43,6 +43,11 @@ export class Ball extends Entity {
         this.x += this.moveSpeed
         this.kickDistance -= this.moveSpeed
       }
+      this.updateStatus()
     }
+  }
+
+  updateStatus () {
+    if (this.kickDistance <= 0) this.status = TYPES.STATUS.BALL.IDLE
   }
 }

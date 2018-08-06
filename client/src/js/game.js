@@ -78,13 +78,18 @@ export class Game {
   }
 
   canDribbling () {
-    // TODO implements dribbling
-    return true
-    // if (this.ball.status === TYPES.STATUS.BALL.IDLE) {
-    //   this.ball.x + this.striker.sprite.width + 1
-    //   if (this.striker.x + this.striker.sprite.width + 1 >= this.ball.x) {
-    //   }
-    // }
+    if (this.ball.status === TYPES.STATUS.BALL.IDLE) {
+      let isOnRight = this.striker.x + Map.getAbsoluteWidth(this.striker.sprite.width) >= this.ball.x &&
+        this.striker.x <= this.ball.x &&
+        this.striker.y <= this.ball.y &&
+        this.striker.y + Map.getAbsoluteWidth(this.striker.sprite.height) >= this.ball.y
+      let isOnLeft = this.striker.x <= this.ball.x + Map.getAbsoluteWidth(this.ball.sprite.width) &&
+        this.striker.x + Map.getAbsoluteWidth(this.striker.sprite.width) >= this.ball.x + Map.getAbsoluteWidth(this.ball.sprite.width) &&
+        this.ball.y + Map.getAbsoluteWidth(this.ball.sprite.height) >= this.striker.y &&
+        this.ball.y + Map.getAbsoluteWidth(this.ball.sprite.height) <= this.striker.y + Map.getAbsoluteWidth(this.striker.sprite.height)
+      return isOnLeft || isOnRight
+    }
+    return this.ball.status === TYPES.STATUS.BALL.DRIBBLED
   }
 
 

@@ -60,11 +60,12 @@ export class Updater {
 
 
   updateBall () {
-    let ball = this.
-    if (_.invoke(this.game.ball, 'canMove')) {
-      this.game.ball.move()
-      if (this.game.ball.x + Map.getAbsoluteWidth(strike.sprite.width) >= CLIENT_WIDTH) this.game.ball.x = CLIENT_WIDTH - 64
-      this.game.connecter.move(this.game.ball)
+    let ball = this.game.ball
+    if (_.invoke(ball, 'canMove')) {
+      ball.move()
+      if (ball.x <= 0) ball.x = 0
+      if (ball.x + Map.getAbsoluteWidth(ball.sprite.width) >= CLIENT_WIDTH) ball.x = CLIENT_WIDTH - Map.getAbsoluteWidth(ball.sprite.width)
+      this.game.connecter.move(ball)
     }
   }
 }
