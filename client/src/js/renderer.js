@@ -4,10 +4,10 @@ import {CLIENT_HEIGHT, CLIENT_WIDTH, GAME_HEIGHT, GAME_WIDTH} from './map'
 export class Renderer {
   constructor (game) {
     this.game = game
-    this.bgCanvas = document.querySelector('#background')
-    this.bgContext = this.bgCanvas.getContext('2d')
     this.canvas = document.querySelector('#game')
+    this.bgCanvas = document.querySelector('#background')
     this.context = this.canvas.getContext('2d')
+    this.bgContext = this.bgCanvas.getContext('2d')
     this.canvas.width = this.bgCanvas.width = CLIENT_WIDTH
     this.canvas.height = this.bgCanvas.height = CLIENT_HEIGHT
     this.lastTime = 0
@@ -38,8 +38,8 @@ export class Renderer {
   }
 
   drawEntity (value) {
-    if (_.get(value, 'sprite.cells.length') && _.isFunction(value.animation)) value.animation()
     if (!_.has(value, 'sprite.cells') || !_.get(value, 'sprite.cells').length) return false
+    if (_.get(value, 'sprite.cells.length') && _.isFunction(value.animation)) value.animation()
     let cell = value.sprite.getCurrentCell()
     this.drawImage(value.sprite.image, cell.left, cell.top, cell.width, cell.height, value.x, value.y, this.canvas.width * cell.width / GAME_WIDTH, this.canvas.height * cell.height / GAME_HEIGHT)
     this.drawText(value.name, (value.x + value.nameOffsetX), (value.y + value.nameOffsetY), true, '#fcda5c', '#fcda5c')
