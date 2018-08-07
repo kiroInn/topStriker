@@ -6,7 +6,7 @@ import {Connect} from './connect'
 import {Ball} from './ball'
 import {Updater} from './updater'
 import * as TYPES from '../../../shared/message'
-import {IMAGES} from './const'
+import {IMAGES, KEY_MAP} from './const'
 import {Map} from './map'
 
 export class Game {
@@ -102,7 +102,7 @@ export class Game {
     window.addEventListener('keydown', e => {
       this.keysDown[e.keyCode] = true
       this.striker.status = TYPES.STATUS.STRIKER.RUNNING
-      if (e.keyCode === 65) this.ball.kick()
+      if (KEY_MAP.KICK === e.keyCode) this.ball.kick()
     }, false)
 
     window.addEventListener('keyup', (e) => {

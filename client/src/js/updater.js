@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import * as TYPES from '../../../shared/message'
 import {CLIENT_HEIGHT, CLIENT_WIDTH, Map} from './map'
+import {KEY_MAP} from './const';
 
 export class Updater {
   constructor (game) {
@@ -16,29 +17,28 @@ export class Updater {
     this.then = now
   }
 
-
   updateEntity (duration) {
     let striker = this.game.striker
     if (_.isNull(striker)) return
     let isMoving = false
-    if (38 in this.game.keysDown) {
+    if (KEY_MAP.UP in this.game.keysDown) {
       striker.y -= striker.speed * duration
       if (striker.y <= 0) striker.y = 0
       isMoving = true
 
     }
-    if (40 in this.game.keysDown) {
+    if (KEY_MAP.DOWN in this.game.keysDown) {
       striker.y += striker.speed * duration
       if (striker.y + Map.getAbsoluteHeight(striker.sprite.height) >= CLIENT_HEIGHT) striker.y = CLIENT_HEIGHT - Map.getAbsoluteHeight(striker.sprite.height)
       isMoving = true
     }
-    if (37 in this.game.keysDown) {
+    if (KEY_MAP.LEFT in this.game.keysDown) {
       striker.x -= striker.speed * duration
       if (striker.x <= 0) striker.x = 0
       striker.orientation = TYPES.ORIENTATIONS.LEFT
       isMoving = true
     }
-    if (39 in this.game.keysDown) {
+    if (KEY_MAP.RIGHT in this.game.keysDown) {
       striker.x += striker.speed * duration
       if (striker.x + Map.getAbsoluteWidth(striker.sprite.width) >= CLIENT_WIDTH) striker.x = CLIENT_WIDTH - Map.getAbsoluteWidth(striker.sprite.width)
       striker.orientation = TYPES.ORIENTATIONS.RIGHT
@@ -60,7 +60,6 @@ export class Updater {
       }
     }
   }
-
 
   updateBall () {
     let ball = this.game.ball
