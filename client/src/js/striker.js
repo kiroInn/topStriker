@@ -15,6 +15,7 @@ export class Striker extends Entity {
     this.speed = 128
     this.status = TYPES.STATUS.STRIKER.IDLE
     this.orientation = TYPES.ORIENTATIONS.RIGHT
+    this.flipSpriteX = false
     this.lastTime = new Date()
     this.setPosition(x, y)
     this.setSprite(new Sprite(IMAGE_MANAGER.NYAN))
@@ -30,6 +31,7 @@ export class Striker extends Entity {
       this.sprite.advance()
       this.lastTime = nowTime
     }
+    this.flipSpriteX = this.orientation === TYPES.ORIENTATIONS.LEFT
   }
 
   dribbling () {
