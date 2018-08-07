@@ -9,7 +9,6 @@ const ANIMATION_INTERVAL_EX = 20
 export class Striker extends Entity {
   constructor ({id, name, x, y}) {
     super(id, TYPES.ENTITIES.STRIKER)
-    this.setPosition(x, y)
     this.name = name
     this.nameOffsetY = 0
     this.nameOffsetX = 15
@@ -17,6 +16,7 @@ export class Striker extends Entity {
     this.status = TYPES.STATUS.STRIKER.IDLE
     this.orientation = TYPES.ORIENTATIONS.RIGHT
     this.lastTime = new Date()
+    this.setPosition(x, y)
     this.setSprite(new Sprite(IMAGE_MANAGER.NYAN))
   }
 
@@ -31,8 +31,6 @@ export class Striker extends Entity {
       this.lastTime = nowTime
     }
   }
-
-
 
   dribbling () {
   }

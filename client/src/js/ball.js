@@ -8,13 +8,13 @@ const DISTANCE = 500
 export class Ball extends Entity {
   constructor ({id, x, y}) {
     super(id, TYPES.ENTITIES.BALL)
-    this.setPosition(x, y)
     this.cellIndex = 0
     this.kickDistance = 0
     this.speed = 1
     this.moveSpeed = 0
     this.status = TYPES.STATUS.BALL.IDLE
     this.lastTime = new Date()
+    this.setPosition(x, y)
     this.setSprite(new Sprite(IMAGE_MANAGER.BALL))
   }
 
