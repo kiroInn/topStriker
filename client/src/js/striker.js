@@ -2,6 +2,7 @@ import {Entity} from './entity'
 import {Sprite} from './sprite'
 import {IMAGE_MANAGER} from './const'
 import * as TYPES from '../../../shared/message'
+import {Map} from './map'
 
 const ANIMATION_INTERVAL = 120
 const ANIMATION_INTERVAL_EX = 20
@@ -33,7 +34,20 @@ export class Striker extends Entity {
     this.sprite.setFlipX(this.orientation === TYPES.ORIENTATIONS.LEFT)
   }
 
-  dribbling () {
+  canDribbling (ball) {
+    const {status, x, y, sprite} = ball
+    if (status === TYPES.STATUS.BALL.IDLE) {
+      let isOnRight = this.x + Map.getAbsoluteWidth(this.sprite.width) >= x &&
+        this.x <= x &&
+        this.y <= y &&
+        this.y + Map.getAbsoluteWidth(this.sprite.height) >= y
+      let isOnLeft = this.x <= x + Map.getAbsoluteWidth(sprite.width) &&
+        this.x + Map.getAbsoluteWidth(this.sprite.width) >= x + Map.getAbsoluteWidth(sprite.width) &&
+        y + Map.getAbsoluteWidth(sprite.height) >= this.y &&
+        y + Map.getAbsoluteWidth(sprite.height) <= this.y + Map.getAbsoluteWidth(this.sprite.height)
+      return isOnLeft || isOnRight
+    }
+    return status === TYPES.STATUS.BALL.DRIBBLED
   }
 
 }
