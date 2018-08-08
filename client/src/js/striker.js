@@ -50,4 +50,14 @@ export class Striker extends Entity {
     return status === TYPES.STATUS.BALL.DRIBBLED
   }
 
+  kick (ball) {
+    // TODO implements kick ball by angle
+    if (this.orientation === TYPES.ORIENTATIONS.RIGHT) {
+      ball.kick(0)
+    }
+    if (this.orientation === TYPES.ORIENTATIONS.LEFT) {
+      ball.kick(180)
+    }
+  }
+
 }

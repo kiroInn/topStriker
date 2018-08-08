@@ -22,8 +22,8 @@ const TYPES = {
       FLIGHT: 2
     },
     STRIKER: {
-      IDLE: 0,
-      RUNNING: 1
+      RUNNING: 1,
+      IDLE: 0
     }
   }
 }

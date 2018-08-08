@@ -1,7 +1,12 @@
 export class Entity {
   constructor (id, type) {
+    // base
     this.id = id
     this.type = type
+
+    // coordinates
+    this.x = -1
+    this.y = -1
 
     // renderer
     this.sprite = null

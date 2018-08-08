@@ -55,19 +55,19 @@ export class Game {
 
     this.connecter.onMove(data => {
       let {id, x, y, type, orientation} = data
-      const value = Map.getAbsolutePosition(x, y)
+      const coordinates = Map.getAbsolutePosition(x, y)
       if (type === TYPES.ENTITIES.STRIKER) {
         if (id === this.striker.id) return true
         _.each(this.strikers, item => {
           if (item.id === id) {
             item.orientation = orientation
             item.status = TYPES.STATUS.STRIKER.RUNNING
-            item.setPosition(value.x, value.y)
+            item.setPosition(coordinates.x, coordinates.y)
           }
         })
       } else if (type === TYPES.ENTITIES.BALL) {
         if (id === this.ball.id) return true
-        this.ball.setPosition(value.x, value.y)
+        this.ball.setPosition(coordinates.x, coordinates.y)
       }
     })
   }
@@ -86,7 +86,7 @@ export class Game {
     window.addEventListener('keydown', e => {
       this.keysDown[e.keyCode] = true
       this.striker.status = TYPES.STATUS.STRIKER.RUNNING
-      if (KEY_MAP.KICK === e.keyCode) this.ball.kick()
+      if (KEY_MAP.KICK === e.keyCode) this.striker.kick(this.ball)
     }, false)
 
     window.addEventListener('keyup', (e) => {

@@ -35,5 +35,5 @@ export class Map {
 
 export const CLIENT_WIDTH = document.body.clientWidth
 export const CLIENT_HEIGHT = document.body.clientHeight
-export const GAME_WIDTH = 736
-export const GAME_HEIGHT = 414
+export const GAME_WIDTH = 736 * 2
+export const GAME_HEIGHT = 414 * 2
