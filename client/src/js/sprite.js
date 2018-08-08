@@ -7,6 +7,7 @@ export class Sprite {
     this.height = 0
     this.cellIndex = 0
     this.cells = []
+    this.flipX = false
     this.load()
   }
 
@@ -32,5 +33,9 @@ export class Sprite {
 
   getCurrentCell () {
     return this.cells[this.cellIndex]
+  }
+
+  setFlipX (isFlipX) {
+    this.flipX = isFlipX
   }
 }
