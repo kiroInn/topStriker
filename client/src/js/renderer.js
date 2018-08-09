@@ -94,7 +94,7 @@ export class Renderer {
     this.lastTime = now
     this.context.fillStyle = 'pink'
     this.context.textAlign = 'end'
-    this.context.fillText(fps.toFixed() + ' fps', this.canvas.clientWidth, 10)
+    this.context.fillText(fps.toFixed() + ' FPS', this.canvas.width, 10)
   }
 
   clear () {
