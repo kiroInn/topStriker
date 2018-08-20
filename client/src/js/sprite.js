@@ -35,7 +35,7 @@ export class Sprite {
     return this.cells[this.cellIndex]
   }
 
-  setFlipX (isFlipX) {
-    this.flipX = isFlipX
+  setFlipX (flipX) {
+    this.flipX = flipX
   }
 }

@@ -13,7 +13,7 @@ export class Renderer {
     this.lastTime = 0
   }
 
-  run () {
+  prepare () {
     this.drawBackground()
   }
 

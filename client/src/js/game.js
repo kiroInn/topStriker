@@ -26,7 +26,7 @@ export class Game {
   }
 
   run () {
-    this.renderer.run()
+    this.renderer.prepare()
     this.initListener()
     this.connect()
     this.tick()
